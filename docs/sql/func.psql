@@ -28,27 +28,28 @@ $$;
 --------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION product_rate_func(
   arg_account_id INTEGER,
-  arg_product_id INTEGER,
+  arg_product_link CHARACTER VARYING,
   arg_value INTEGER
 )
   RETURNS VOID
   LANGUAGE plpgsql
 AS $$
   DECLARE
+    var_id INTEGER;
     is_exists BOOLEAN;
   BEGIN
+    var_id = (SELECT id FROM product
+              WHERE link = arg_product_link);
     is_exists = (SELECT COUNT(1) > 0 
-                FROM rate
-                WHERE account_id = arg_account_id
-                  AND product_id = arg_product_id);
-    IF (!is_exists) THEN
-      INSERT INTO rate (product_id, account_id, value)
-        VALUES(arg_product_id, arg_account_id, arg_value); 
+                 FROM rate
+                 WHERE account_id = arg_account_id 
+                   AND product_id = var_id);
+    IF (is_exists) THEN
+      UPDATE rate SET value = arg_value
+        WHERE account_id = arg_account_id AND product_id = var_id;
     ELSE
-      UPDATE rate
-        SET value = arg_value
-        WHERE account_id = arg_account_id 
-          AND product_id = arg_product_id;
+      INSERT INTO rate (product_id, account_id, value)
+        VALUES(var_id, arg_account_id, arg_value); 
     END IF;
   END;
 $$;
