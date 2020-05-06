@@ -1,0 +1,24 @@
+--------------------------------------------------------------------------------
+-- add new account ------------------------------------------------------------
+--------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION account_add_func(
+  arg_email CHARACTER VARYING,
+  arg_password CHARACTER VARYING
+)
+  RETURNS INTEGER
+  LANGUAGE plpgsql
+AS $$
+  DECLARE
+    is_exists BOOLEAN;
+  BEGIN
+    is_exists = (SELECT COUNT(1) > 0 
+                FROM account
+                WHERE email = arg_email);
+    IF (is_exists) THEN
+      RAISE 'User with this email exists!';
+    END IF;
+    INSERT INTO account (email, password)
+      VALUES (arg_email, arg_password);
+    RETURN currval('account_id_seq');
+  END;
+$$;
