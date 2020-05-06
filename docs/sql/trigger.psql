@@ -1,0 +1,31 @@
+-- account
+CREATE OR REPLACE FUNCTION public.account_update_func()
+  RETURNS trigger
+  LANGUAGE plpgsql
+AS $function$
+  BEGIN
+    NEW.update_time = now();
+    RETURN NEW;
+  END;
+$function$
+;
+
+CREATE TRIGGER update_account_trigger 
+  BEFORE UPDATE ON account 
+  FOR EACH ROW EXECUTE PROCEDURE account_update_func();
+
+-- product
+CREATE OR REPLACE FUNCTION public.product_update_func()
+  RETURNS trigger
+  LANGUAGE plpgsql
+AS $function$
+  BEGIN
+    NEW.update_time = now();
+    return NEW;
+  END;
+$function$
+;
+
+CREATE TRIGGER update_product_trigger
+  BEFORE UPDATE ON product 
+  FOR EACH ROW EXECUTE PROCEDURE product_update_func();

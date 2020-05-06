@@ -1,0 +1,202 @@
+--------------------------------------------------------------------------------
+-- user ------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE account (
+  id SERIAL NOT NULL,
+  email CHARACTER VARYING,
+  password CHARACTER VARYING,
+  create_time TIMESTAMP WITH TIME ZONE,
+  update_time TIMESTAMP WITH TIME ZONE,
+
+  CONSTRAINT account_id_pk PRIMARY KEY (id)
+);
+
+CREATE OR REPLACE FUNCTION account_update_func()
+  RETURNS TRIGGER
+  LANGUAGE plpgsql
+AS $$
+  BEGIN
+    NEW.update_time = now();
+    RETURN NEW;
+  END;
+$$;
+
+CREATE TRIGGER account_update_trigger BEFORE UPDATE ON account
+  FOR EACH ROW EXECUTE PROCEDURE account_update_func();
+
+--------------------------------------------------------------------------------
+-- product ---------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE product (
+  id SERIAL NOT NULL,
+  parent_id INTEGER NULL,
+  title CHARACTER VARYING NOT NULL,
+  img_url CHARACTER VARYING NULL,
+  category CHARACTER VARYING NOT NULL,
+  status CHARACTER VARYING NOT NULL,
+  link CHARACTER VARYING NOT NULL,
+  price NUMERIC(2) NOT NULL,
+  description TEXT NOT NULL,
+  create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  update_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+
+  CONSTRAINT product_id_pk PRIMARY KEY (id),
+  CONSTRAINT product_parent_id_fk FOREIGN KEY (parent_id)
+    REFERENCES product(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE OR REPLACE FUNCTION product_update_func()
+  RETURNS TRIGGER
+  LANGUAGE plpgsql
+AS $$
+  BEGIN
+    NEW.update_time = now();
+    return NEW;
+  END;
+$$;
+
+CREATE TRIGGER product_update_trigger BEFORE UPDATE ON product 
+  FOR EACH ROW EXECUTE PROCEDURE product_update_func();
+
+--------------------------------------------------------------------------------
+-- tag -------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE tag (
+  product_id INTEGER NOT NULL,
+  tag CHARACTER VARYING NOT NULL,
+
+  CONSTRAINT tag_product_id_tag_pk PRIMARY KEY (product_id,tag),
+  CONSTRAINT tag_product_id_fk FOREIGN KEY (product_id)
+    REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--------------------------------------------------------------------------------
+-- rate ------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE rate (
+  product_id INTEGER NOT NULL,
+  account_id INTEGER NOT NULL,
+  value INTEGER NOT NULL,
+  create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+
+  CONSTRAINT rate_product_id_user_id_pk PRIMARY KEY (account_id,product_id),
+  CONSTRAINT rate_account_id_fk FOREIGN KEY (account_id)
+    REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT rate_product_id_fk FOREIGN KEY (product_id)
+    REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--------------------------------------------------------------------------------
+-- review ----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE review (
+  id SERIAL NOT NULL,
+  product_id INTEGER NOT NULL,
+  account_id INTEGER NOT NULL,
+  title CHARACTER VARYING NOT NULL,
+  text TEXT NOT NULL,
+  create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  update_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+
+  CONSTRAINT review_id_pk PRIMARY KEY (id),
+  CONSTRAINT review_product_id_fk FOREIGN KEY (product_id)
+    REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT review_account_id_fk FOREIGN KEY (account_id)
+    REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE OR REPLACE FUNCTION review_update_func()
+  RETURNS TRIGGER
+  LANGUAGE plpgsql
+AS $$
+  BEGIN
+    NEW.update_time = now();
+    RETURN NEW;
+  END;
+$$;
+
+CREATE TRIGGER review_update_trigger BEFORE UPDATE ON review
+  FOR EACH ROW EXECUTE PROCEDURE review_update_func();
+
+--------------------------------------------------------------------------------
+-- review vote -----------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE review_vote (
+  review_id INTEGER NOT NULL,
+  account_id INTEGER NOT NULL,
+  vote BOOLEAN NOT NULL,
+
+  CONSTRAINT review_vote_review_id_account_id 
+    PRIMARY KEY (review_id, account_id),
+  CONSTRAINT review_review_id_fk FOREIGN KEY (review_id)
+    REFERENCES review(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT review_account_id_fk FOREIGN KEY (account_id)
+    REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--------------------------------------------------------------------------------
+-- order -----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE customer_order (
+  id SERIAL NOT NULL,
+  account_id INTEGER NOT NULL,
+  status CHARACTER VARYING NOT NULL,
+  total_price NUMERIC(2) NOT NULL,
+  create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  update_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+
+  CONSTRAINT customer_order_id_pk PRIMARY KEY (id),
+  CONSTRAINT customer_order_account_id_fk FOREIGN KEY (account_id)
+    REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE OR REPLACE FUNCTION customer_order_update_func()
+  RETURNS TRIGGER
+  LANGUAGE plpgsql
+AS $$
+  BEGIN
+    NEW.update_time = now();
+    RETURN NEW;
+  END;
+$$;
+
+CREATE TRIGGER customer_order_update_trigger BEFORE UPDATE ON customer_order
+  FOR EACH ROW EXECUTE PROCEDURE customer_order_update_func();
+
+--------------------------------------------------------------------------------
+-- order has product -----------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE order_has_product (
+  order_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
+
+  CONSTRAINT order_has_product_order_id_product_id_pk 
+    PRIMARY KEY (order_id, product_id),
+  CONSTRAINT order_has_product_order_id_fk FOREIGN KEY (order_id)
+    REFERENCES customer_order(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT order_has_product_product_id_fk FOREIGN KEY (product_id)
+    REFERENCES product(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+--------------------------------------------------------------------------------
+-- admin -----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE admin_account (
+  id SERIAL NOT NULL,
+  login CHARACTER VARYING NOT NULL,
+  password CHARACTER VARYING NOT NULL,
+  create_time CHARACTER VARYING NOT NULL DEFAULT now(),
+  update_time CHARACTER VARYING NOT NULL DEFAULT now(),
+
+  CONSTRAINT admin_account_id_pk PRIMARY KEY (id)
+);
