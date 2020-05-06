@@ -22,15 +22,7 @@
 
 | Method | URL | Description |
 |:---:|---|---|
-| GET | `/api/products` | All list of all products (Catalog) |
-| POST | `/api/products` | **Admin action**: Add new product |
-| GET | `/api/products?from={start}&limit={size}` | Get specified qunatity list of products |
-| GET | `/api/products?category={category}` | Get products from specified category |
-| GET | `/api/products?tag={tagList}` | Get products with specified tag |
-| GET | `/api/products?name={str}` | Get products with specified name |
-| GET | `/api/products?price-from={min}&price-to={max}` | Get products with price from A to B |
-| GET | `/api/products?rate={"ASC" || "DESC"}` | Get products with rating by ASC of DESC |
-| GET | `/api/products?date={"ASC" || "DESC"}` | Get products with Date Adding by ASC of DESC |
+| GET | `/api/products/list` | All list of all products (Catalog) |
 | GET | `/api/products/{id}/` | Get all info about one specified product and some reviews |
 | PUT | `/api/product/{id}/` | **Admin action**: Change info about product (Hide) |
 | DELETE | `/api/product/{id}/` | **Admin action**: Delete product |

@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+-- list of products with tags --------------------------------------------------
+--------------------------------------------------------------------------------
+
+SELECT DISTINCT
+  id,
+  title,
+  img_url,
+  category,
+  link,
+  price,
+  description,
+  create_time,
+  array(SELECT tag
+        FROM tag
+        WHERE product_id = id) AS tag_list
+FROM product AS p
+  LEFT JOIN tag ON tag.product_id = p.id
+WHERE status = 'default'
+  AND category IN ('Monitor', 'Laptop')
+  -- AND tag = 'Apple'
+  -- AND title LIKE '%Apple%'
+  AND price >= 1000 
+  AND price <= 100000
+ORDER BY create_time/*price*/ /*id*/ ASC LIMIT 5 OFFSET 0; 

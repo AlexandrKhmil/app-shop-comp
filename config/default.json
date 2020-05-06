@@ -1,4 +1,4 @@
 {
-  "db": "postgres://postgres:alex@localhost:5432/db_flower",
+  "db": "postgres://postgres:alex@localhost:5432/db_comp",
   "jwtSecret": "jwtSecret"
 }
