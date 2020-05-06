@@ -17,7 +17,7 @@ router.get(
   account,
   async (req, res) => {
     try {
-      const query = require('../sql/user_get_by_id');
+      const query = require('../sql/account_get_by_id');
       const result = await db.one(query, req.token.id)
         .then((data) => data)
         .catch((error) => ({ error }));
@@ -43,7 +43,7 @@ router.post(
   async (req, res) => {
     try {
       const { email, password } = req.body;
-      const query = require('../sql/user_get_by_email');
+      const query = require('../sql/account_get_by_email');
       const result = await db.one(query, email)
         .then((data) => data)
         .catch((error) => ({ error }));
@@ -105,7 +105,7 @@ router.post(
     try {
       const { password_old, password_new } = req.body;
       const { id } = req.token;
-      const queryGet = require('../sql/user_get_password_by_id').get;
+      const queryGet = require('../sql/account_get_password_by_id').get;
       const result = await db.one(queryGet, id)
         .then((data) => data)
         .catch((error) => ({ error }));
@@ -118,7 +118,7 @@ router.post(
         return res.status(500).json({ msg: 'Error' });
       }
 
-      const querySet = require('../sql/user_get_password_by_id').set;
+      const querySet = require('../sql/account_get_password_by_id').set;
       const hashedPassword = await bcrypt.hash(password_new, 12);
       db.none(querySet, [hashedPassword, id])
         .then(() => res.status(200).json('Ok'))
