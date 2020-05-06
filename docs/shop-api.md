@@ -26,11 +26,8 @@
 | GET | `/api/products/{id}/` | Get all info about one specified product and some reviews |
 | PUT | `/api/product/{id}/` | **Admin action**: Change info about product (Hide) |
 | DELETE | `/api/product/{id}/` | **Admin action**: Delete product |
-| POST | `/api/products/{productId}/rate` | Rate product |
-| PUT | `/api/products/{productId}/rate` | Change rate of product |
+| POST | `/api/products/{productId}/rate` | Rate product & change user rate |
 | DELETE | `/api/products/{productId}/rate` | Delete rate of product |
-| GET | `/api/products/{productId}/review` | Get secified number of reviews to product |
-| GET | `/api/products/{productId}/reviews&from={start}&limit={size}` | Get secified number of reviews to product |
 | POST | `/api/products/{productId}/reviews` | Add review to product |
 | PUT | `/api/products/{productId}/reviews` | Change user's review |
 | DELETE | `/api/products/{productId}/reviews` | Delete user's review |

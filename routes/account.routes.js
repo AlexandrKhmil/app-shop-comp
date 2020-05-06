@@ -102,7 +102,7 @@ router.post('/register', [
       const token = signToken(result);
       return res.status(200).json({ token, email });
     } catch (error) {
-
+      return res.status(500).json({ msg: 'Error', error })
     }
   }
 );

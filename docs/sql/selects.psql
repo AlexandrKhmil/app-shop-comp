@@ -3,23 +3,70 @@
 --------------------------------------------------------------------------------
 
 SELECT DISTINCT
-  id,
-  title,
-  img_url,
-  category,
-  link,
-  price,
-  description,
-  create_time,
+  p.id,
+  p.title,
+  p.img_url,
+  p.category,
+  p.link,
+  p.price,
+  p.description,
+  p.create_time,
+  AVG(value) AS rate,
+  COUNT(rate.*) AS vote_count,
+  COUNT(rev.*) AS review_count,
   array(SELECT tag
         FROM tag
-        WHERE product_id = id) AS tag_list
+        WHERE tag.product_id = p.id) AS tag_list
 FROM product AS p
-  LEFT JOIN tag ON tag.product_id = p.id
+  LEFT JOIN rate ON rate.product_id = p.id
+  LEFT JOIN review AS rev ON rev.product_id = p.id
+  -- LEFT JOIN tag ON tag.product_id = p.id
 WHERE status = 'default'
   AND category IN ('Monitor', 'Laptop')
   -- AND tag = 'Apple'
   -- AND title LIKE '%Apple%'
-  AND price >= 1000 
-  AND price <= 100000
-ORDER BY create_time/*price*/ /*id*/ ASC LIMIT 5 OFFSET 0; 
+  -- AND price >= 1000 
+  -- AND price <= 100000
+GROUP BY p.id
+ORDER BY p.create_time/*price*/ /*id*/ ASC LIMIT 5 OFFSET 0; 
+
+--------------------------------------------------------------------------------
+-- product info ----------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+SELECT
+  p.id,
+  p.title,
+  p.img_url,
+  p.category,
+  p.link,
+  p.price,
+  p.description,
+  p.create_time,
+  AVG(value) AS rate,
+  COUNT(rate.*) AS votes,
+  COUNT(rev.*) AS review_count,
+  array(SELECT tag
+        FROM tag
+        WHERE tag.product_id = p.id) AS tag_list,
+  (SELECT json_agg(t)
+   FROM (SELECT 
+          rev.id,
+          rev.title,
+          rev.text,
+          a.email,
+          (SELECT COUNT(1) FROM review_vote WHERE vote = true) AS likes,
+          (SELECT COUNT(1) FROM review_vote WHERE vote = false) AS dislikes,
+          rev.create_time,
+          rev.update_time
+        FROM review AS rev
+          INNER JOIN account AS a ON a.id = rev.account_id
+        WHERE rev.product_id = p.id
+        GROUP BY rev.id, a.email) AS t)
+FROM product AS p
+  LEFT JOIN rate ON rate.product_id = p.id
+  LEFT JOIN review AS rev ON rev.product_id = p.id
+WHERE status = 'default'
+  AND p.link = 'acer3'
+GROUP BY p.id
+
