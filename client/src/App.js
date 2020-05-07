@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  positions, 
+  transitions,
+  Provider as AlertProvider 
+} from 'react-alert';
+import Alert from './containers/Alert';
+import AlertTemplate from './components/AlertTemplate';
 import Header from './containers/Header';
 import Home from './pages/Home';
 import Modal from './containers/Modal';
@@ -24,25 +31,37 @@ const App = (
     if(token && !isAuth) authUser(token);
   }, [token, isAuth, authUser]);
 
+  const alertOptions = {
+    position: positions.TOP_CENTER,
+    timeout: 5000,
+    transition: transitions.FADE,
+    containerStyle: {
+      zIndex: 1070,
+    },
+  };
+
   return (
-    <Router>
-      <Header />
-      <Modal 
-        isOpen={modalLoginIsOpen} 
-        close={modalLoginClose} 
-        title={'Login'}>
-        <Login />
-      </Modal>
-      <Modal 
-        isOpen={modalRegIsOpen} 
-        close={modalRegClose} 
-        title={'Registration'}>
-        <Registration />
-      </Modal>
-      <Switch>
-        <Route exact path="/" component={Home} />
-      </Switch>
-    </Router>
+    <AlertProvider template={AlertTemplate} {...alertOptions}>
+      <Router>
+        <Header />
+        <Alert />
+        <Modal 
+          isOpen={modalLoginIsOpen} 
+          close={modalLoginClose} 
+          title={'Login'}>
+          <Login />
+        </Modal>
+        <Modal 
+          isOpen={modalRegIsOpen} 
+          close={modalRegClose} 
+          title={'Registration'}>
+          <Registration />
+        </Modal>
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Router>
+    </AlertProvider>
   );
 };
 

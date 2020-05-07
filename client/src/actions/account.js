@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { jsonRequest } from '../functions';
+import { resMessageShow } from './message';
 import { modalLoginClose, modalRegClose } from './modal';
 import {
   ACCOUNT_AUTH_REQUEST,
@@ -69,6 +70,7 @@ export const authUser = (token) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(authFail());
+      resMessageShow(error.response.data)(dispatch);
     });
 }
 
@@ -82,6 +84,7 @@ export const loginUser = ({ email, password }) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(loginFail());
+      resMessageShow(error.response.data)(dispatch);
     });
 };
 
@@ -95,5 +98,6 @@ export const registrationUser = ({ email, password }) => (dispatch) => {
   })
   .catch((error) => {
     dispatch(regFail());
+    resMessageShow(error.response.data)(dispatch);
   });
 }
