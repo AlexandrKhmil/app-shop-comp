@@ -2,7 +2,7 @@ const initialState = {
   email: null,
   token: null,
   isLoading: false,
-  isAuth: true,
+  isAuth: false,
 };
 
 export default (state = initialState, { type, payload }) => {

@@ -1,0 +1,2 @@
+export const MODAL_LOGIN_OPEN = 'MODAL_LOGIN_OPEN';
+export const MODAL_LOGIN_CLOSE = 'MODAL_LOGIN_CLOSE';

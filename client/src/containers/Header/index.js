@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { modalLoginOpen } from '../../actions/modal';
 
-const Header = ({ isAuth }) => {
+const Header = (
+  { 
+    isAuth,
+    modalLoginOpen,
+  }) => {
 
   const unauthLinks = (
     <>
       <li className="nav-item">
         <button 
-          className="nav-link btn btn-link">
+          className="nav-link btn btn-link"
+          onClick={modalLoginOpen}>
           Login
         </button>
       </li>
@@ -58,11 +64,8 @@ const mapStateToProps = (state) => ({
   isAuth: state.account.isAuth,
 });
 
-const mapDispatchToProps = {
-  
-};
+const mapDispatchToProps = (dispatch) => ({
+  modalLoginOpen: () => dispatch(modalLoginOpen()),
+});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
