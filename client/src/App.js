@@ -14,6 +14,7 @@ import Modal from './containers/Modal';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import { authUser } from './actions/account';
+import { getProductList } from './actions/product';
 import { modalLoginClose, modalRegClose } from './actions/modal';
 
 const App = (
@@ -21,6 +22,9 @@ const App = (
     token,
     isAuth,
     authUser,
+    isLoading,
+    isLoaded,
+    getProductList,
     modalLoginIsOpen, 
     modalLoginClose,
     modalRegIsOpen,
@@ -30,6 +34,9 @@ const App = (
   useEffect(() => {
     if(token && !isAuth) authUser(token);
   }, [token, isAuth, authUser]);
+  useEffect(() => {
+    if(!isLoaded && !isLoading) getProductList();
+  }, [isLoading, isLoaded, getProductList]);
 
   const alertOptions = {
     position: positions.TOP_CENTER,
@@ -68,12 +75,15 @@ const App = (
 const mapStateToProps = (state) => ({
   token: state.account.token,
   isAuth: state.account.isAuth,
+  isLoading: state.product.isLoading,
+  isLoaded: state.product.isLoaded,
   modalLoginIsOpen: state.modal.login.isOpen,
   modalRegIsOpen: state.modal.registration.isOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   authUser: (value) => authUser(value)(dispatch),
+  getProductList: () => getProductList()(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
 });
