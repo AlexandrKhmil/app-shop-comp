@@ -28,9 +28,8 @@
 | DELETE | `/api/product/{id}/` | **Admin action**: Delete product |
 | POST | `/api/products/{productId}/rate` | Rate product & change user rate |
 | DELETE | `/api/products/{productId}/rate` | Delete rate of product |
-| POST | `/api/products/{productId}/reviews` | Add review to product |
-| PUT | `/api/products/{productId}/reviews` | Change user's review |
-| DELETE | `/api/products/{productId}/reviews` | Delete user's review |
+| POST | `/api/products/{productId}/review` | Add review to product |
+| DELETE | `/api/products/{productId}/review` | Delete user's review |
 | POST | `/api/products/{productId}/review/like` | Add Like to review |
 
 ---

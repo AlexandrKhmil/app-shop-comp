@@ -11,12 +11,14 @@ router.get(
     try {
       const { limit, offset } = req.headers;
       const query = require('../sql/product_get_list')(req.headers);
+
       const result = await db.any(query, { limit, offset })
         .then((data) => data)
         .catch((error) => ({ error }));
       if (result.error) {
         return res.status(500).json({ msg: 'Error1', error: result.error });
       }
+
       return res.status(200).json(result);
     } catch(error) {
       return res.status(500).json({ msg: 'Error' });
@@ -30,16 +32,17 @@ router.get(
     try {
       const { link } = req.params;
       const query = require('../sql/product_get_item');
+
       const result = await db.one(query, link)
         .then((data) => data)
         .catch((error) => ({ error }));
-      console.log(result)
       if (result.error) {
         return res.status(500).json({ msg: 'Error', error: result.error });
       }
+
       return res.status(200).json(result);
     } catch(error) {
-      return res.status(500).json({ msg: 'Error1', error });
+      return res.status(500).json({ msg: 'Error1' });
     }
   }
 );
@@ -59,7 +62,7 @@ router.post(
         .then(() => res.status(200).json({ msg: 'Ok' }))
         .catch((error) => res.status(500).json({ msg: 'Error', error }));
     } catch(error) {
-      return res.status(500).json({ msg: 'Error', error });
+      return res.status(500).json({ msg: 'Error' });
     }
   }
 );
@@ -72,11 +75,12 @@ router.delete(
       const { link } = req.params;
       const accountid = req.token.id;
       const query = require('../sql/rate_delete');
+
       db.none(query, { accountid, link })
         .then(() => res.status(200).json({ msg: 'Ok' }))
         .catch((error) => res.status(500).json({ msg: 'Error', error }));
     } catch(error) {
-      return res.status(500).json({ msg: 'Error', error });
+      return res.status(500).json({ msg: 'Error' });
     }
   }
 );
@@ -91,13 +95,71 @@ router.post(
   error,
   async (req, res) => {
     try {
-      const { link } = req.params,
-            accountid = req.token.id,
-            query = require('../sql/review_add');
-      db.none(query, { accountid })
+      const { link } = req.params;
+      const accountid = req.token.id;
+      const { title, text } = req.body;
 
+      db.func('review_add_func', [link, accountid, title, text])
+        .then(() => res.status(200).json({ msg: 'OK' }))
+        .catch((error) => res.status(500).json({ msg: 'Error', error }));
     } catch(error) {
-      return res.status(500).json({ msg: 'Error', error });
+      return res.status(500).json({ msg: 'Error' });
+    }
+  }
+);
+
+router.delete(
+  '/:link/review',
+  account,
+  async (req, res) => {
+    try {
+      const { link } = req.params;
+      const accountid = req.token.id;
+      const query = require('../sql/review_delete');
+
+      db.none(query, { accountid, link })
+        .then(() => res.status(200).json({ msg: 'Ok' }))
+        .catch((error) => res.status(500).json({ msg: 'Error', error }));
+    } catch(error) {
+      return res.status(500).json({ msg: 'Error' });
+    }
+  }
+);
+
+router.post(
+  '/:link/review/:id',
+  account,
+  [ body('vote', 'Vote').isBoolean() ],
+  error,
+  async(req, res) => {
+    try {
+      const { id } = req.params;
+      const accountid = req.token.id;
+      const { vote } = req.body;
+
+      db.func('review_add_func', [ id, accountid, vote ])
+        .then(() => res.status(200).json({ msg: 'Ok' }))
+        .catch((error) => res.status(500).json({ msg: 'Error', error }));
+    } catch(error) {
+      return res.status(500).json({ msg: 'Error' });
+    }
+  }
+);
+
+router.delete(
+  '/:link/review/:id',
+  account,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const accountid = req.token.id;
+      const query = require('../sql/review_vote_delete');
+
+      db.none(query, { reviewid: id, accountid })
+        .then(() => res.status(200).json({ msg: 'Ok' }))
+        .catch((error) => res.status(500).json({ msg: 'Error', error }));
+    } catch(error) {
+      return res.status(500).json({ msg: 'Error' });
     }
   }
 );
