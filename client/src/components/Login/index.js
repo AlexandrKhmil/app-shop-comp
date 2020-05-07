@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
+import { loginUser } from '../../actions/account';
 
-const Login = ({ isLoading }) => {
+const Login = ({ isLoading, loginUser }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    loginUser({ email, password });
+  }
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input 
@@ -52,7 +57,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  
+  loginUser: (value) => loginUser(value)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

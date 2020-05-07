@@ -6,6 +6,7 @@ import { modalLoginOpen, modalRegOpen } from '../../actions/modal';
 const Header = (
   { 
     isAuth,
+    email,
     modalLoginOpen,
     modalRegOpen,
   }) => {
@@ -32,7 +33,7 @@ const Header = (
   const authLinks = (
     <>
       <li className="nav-item">
-        <p className="text-light mb-0 mr-3">Welcome user!</p>
+        <p className="text-light mb-0 mr-3">Welcome {email}!</p>
       </li>
       <li className="nav-item">
         <button 
@@ -64,6 +65,7 @@ const Header = (
 
 const mapStateToProps = (state) => ({
   isAuth: state.account.isAuth,
+  email: state.account.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
