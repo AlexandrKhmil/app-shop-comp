@@ -93,7 +93,7 @@ $$;
 --------------------------------------------------------------------------------
 -- vote review -----------------------------------------------------------------
 --------------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION review_add_func(
+CREATE OR REPLACE FUNCTION review_vote_func(
   arg_review_id INTEGER,
   arg_account_id INTEGER,
   arg_vote BOOLEAN
@@ -115,5 +115,44 @@ AS $$
       INSERT INTO review_vote (review_id, account_id, vote)
       VALUES(arg_review_id, arg_account_id, arg_vote);
     END IF;
+  END;
+$$;
+
+--------------------------------------------------------------------------------
+-- order add -------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- '[{"product_id": "1", "quantity": "10"}]'::json 
+
+CREATE OR REPLACE FUNCTION order_add_func(
+  arg_account_id INTEGER,
+  arg_product_list JSON,
+  arg_code CHARACTER VARYING
+)
+  RETURNS VOID
+  LANGUAGE plpgsql
+AS $$
+  DECLARE
+    var_total NUMERIC(10, 2);
+    var_order_id INTEGER;
+  BEGIN
+    CREATE TEMP TABLE temp_cart AS
+      (SELECT * FROM json_to_recordset(arg_product_list) 
+         AS x(product_id INTEGER, quantity INTEGER));
+
+    var_total = (SELECT SUM(sum_product) AS sum_total
+                 FROM (SELECT SUM(quantity * p.price) AS sum_product
+                       FROM temp_cart
+                         INNER JOIN product AS p ON product_id = p.id
+                       GROUP BY p.id) AS list_product_sum);
+
+    INSERT INTO customer_order (account_id, total_price, code)
+    VALUES (arg_account_id, var_total, arg_code);
+
+    var_order_id = currval('customer_order_id_seq');
+
+    INSERT INTO order_has_product
+    SELECT var_order_id AS order_id, * FROM temp_cart;
+
+    DROP TABLE temp_cart;
   END;
 $$;

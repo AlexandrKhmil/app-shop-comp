@@ -147,8 +147,9 @@ CREATE TABLE review_vote (
 CREATE TABLE customer_order (
   id SERIAL NOT NULL,
   account_id INTEGER NOT NULL,
-  status CHARACTER VARYING NOT NULL,
-  total_price NUMERIC(2) NOT NULL,
+  code CHARACTER VARYING NOT NULL,
+  status CHARACTER VARYING NOT NULL DEFAULT 'initialized',
+  total_price NUMERIC(10, 2) NOT NULL,
   create_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   update_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
 

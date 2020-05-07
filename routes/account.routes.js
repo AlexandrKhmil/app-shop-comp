@@ -3,12 +3,8 @@ const router = Router();
 const bcrypt = require('bcryptjs');
 const { body } = require('express-validator');
 const db = require('../connection');
-
-// Middleware
 const account = require('../middleware/account.middleware');
 const error = require('../middleware/error.middleware');
-
-// Functions
 const signToken = require('../functions/signToken');
 
 // GET `api/account/auth`

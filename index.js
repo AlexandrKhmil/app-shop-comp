@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json({ extended: true }));
 app.use('/api/account', require('./routes/account.routes'));
 app.use('/api/product', require('./routes/product.routes'));
+app.use('/api/order', require('./routes/order.routes'));
 
 app.listen(port, () => {
   console.log(`App listening`);

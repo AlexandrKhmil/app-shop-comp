@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const db = require('../connection');
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 const account = require('../middleware/account.middleware');
 const error = require('../middleware/error.middleware');
 
@@ -144,7 +144,7 @@ router.post(
       const accountid = req.token.id;
       const { vote } = req.body;
 
-      db.func('review_add_func', [ id, accountid, vote ])
+      db.func('review_vote_func', [ id, accountid, vote ])
         .then(() => res.status(200).json({ msg: 'Ok' }))
         .catch((error) => res.status(500).json({ msg: 'Error', error }));
     } catch(error) {
