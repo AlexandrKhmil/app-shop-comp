@@ -1,11 +1,39 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-const Header = () => {
-  const [search, setSearch] = useState('');
-  const onSumbit = (e) => {
-    e.preventDefault();
-  }
+const Header = ({ isAuth }) => {
+
+  const unauthLinks = (
+    <>
+      <li className="nav-item">
+        <button 
+          className="nav-link btn btn-link">
+          Login
+        </button>
+      </li>
+      <li className="nav-item">
+        <button 
+          className="nav-link btn btn-link">
+          Register
+        </button>
+      </li>
+    </>
+  );
+  
+  const authLinks = (
+    <>
+      <li className="nav-item">
+        <p className="text-light mb-0 mr-3">Welcome user!</p>
+      </li>
+      <li className="nav-item">
+        <button 
+          className="nav-link btn btn-link">
+          Logout
+        </button>
+      </li>
+    </>
+  );
 
   return (
     <header>
@@ -17,25 +45,24 @@ const Header = () => {
               <NavLink className="nav-link" to="/">Home</NavLink>
             </li>
           </ul>
-          <form 
-            className="form-inline my-2 my-lg-0"
-            onSubmit={onSumbit}>
-            <input 
-              className="form-control mr-sm-2" 
-              type="text" 
-              placeholder="Search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)} />
-            <button
-              className="btn btn-secondary my-2 my-sm-0"
-              type="submit">
-              Search
-            </button>
-          </form>
+          <ul className="navbar-nav ml-auto align-items-center">
+            {!isAuth ? unauthLinks : authLinks}
+          </ul>
         </div>
       </nav>
     </header>
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  isAuth: state.account.isAuth,
+});
+
+const mapDispatchToProps = {
+  
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
