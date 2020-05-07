@@ -84,22 +84,18 @@ router.delete(
 router.post(
   '/:link/review', 
   account, 
-  [],
+  [
+    body('title', 'Title').isLength({ min: 5, max: 255 }),
+    body('text', 'Text').isLength({ min: 5 })
+  ],
+  error,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(500).json({ 
-          msg: 'Error', 
-          errorList: errors.array(), 
-        });
-      }
+      const { link } = req.params,
+            accountid = req.token.id,
+            query = require('../sql/review_add');
+      db.none(query, { accountid })
 
-      const query = `
-        INSERT INTO public.review
-        (product_id, account_id, title, "text", create_time, update_time)
-        VALUES(0, 0, '', '', now(), now());`;
-      
     } catch(error) {
       return res.status(500).json({ msg: 'Error', error });
     }

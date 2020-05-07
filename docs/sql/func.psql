@@ -18,7 +18,7 @@ AS $$
       RAISE 'User with this email exists!';
     END IF;
     INSERT INTO account (email, password)
-      VALUES (arg_email, arg_password);
+    VALUES (arg_email, arg_password);
     RETURN currval('account_id_seq');
   END;
 $$;
@@ -45,11 +45,45 @@ AS $$
                  WHERE account_id = arg_account_id 
                    AND product_id = var_id);
     IF (is_exists) THEN
-      UPDATE rate SET value = arg_value
-        WHERE account_id = arg_account_id AND product_id = var_id;
+      UPDATE rate 
+      SET value = arg_value
+      WHERE account_id = arg_account_id 
+        AND product_id = var_id;
     ELSE
       INSERT INTO rate (product_id, account_id, value)
-        VALUES(var_id, arg_account_id, arg_value); 
+      VALUES(var_id, arg_account_id, arg_value); 
+    END IF;
+  END;
+$$;
+--------------------------------------------------------------------------------
+-- add review ------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION product_rate_func(
+  arg_account_id INTEGER,
+  arg_product_link CHARACTER VARYING,
+  arg_value INTEGER
+)
+  RETURNS VOID
+  LANGUAGE plpgsql
+AS $$
+  DECLARE
+    var_id INTEGER;
+    is_exists BOOLEAN;
+  BEGIN
+    var_id = (SELECT id FROM product
+              WHERE link = arg_product_link);
+    is_exists = (SELECT COUNT(1) > 0 
+                 FROM rate
+                 WHERE account_id = arg_account_id 
+                   AND product_id = var_id);
+    IF (is_exists) THEN
+      UPDATE rate 
+      SET value = arg_value
+      WHERE account_id = arg_account_id 
+        AND product_id = var_id;
+    ELSE
+      INSERT INTO rate (product_id, account_id, value)
+      VALUES(var_id, arg_account_id, arg_value); 
     END IF;
   END;
 $$;
