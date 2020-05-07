@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { registrationUser } from '../../actions/account';
 
-const Registration = ({ isLoading }) => {
+const Registration = ({ isLoading, registrationUser }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordRepeat, setPasswordRepeat] = useState();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (password !== passwordRepeat) {
+      return;
+    }
+    registrationUser({ email, password });
+  };
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input 
@@ -63,7 +71,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  
+  registrationUser: (value) => registrationUser(value)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

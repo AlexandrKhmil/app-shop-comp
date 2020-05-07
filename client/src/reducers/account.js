@@ -6,6 +6,12 @@ import {
   ACCOUNT_LOGIN_REQUEST,
   ACCOUNT_LOGIN_SUCCESS,
   ACCOUNT_LOGIN_FAIL,
+
+  ACCOUNT_REGISTRATION_REQUEST,
+  ACCOUNT_REGISTRATION_SUCCESS,
+  ACCOUNT_REGISTRATION_FAIL,
+
+  ACCOUNT_LOGOUT,
 } from '../constants/types';
 
 const initialState = {
@@ -63,6 +69,42 @@ export default (state = initialState, { type, payload }) => {
         isLoading: false,
         isAuth: false,
       };
+    }
+
+    case ACCOUNT_REGISTRATION_REQUEST: {
+      return {
+        ...state,
+        isLoading: true,
+      }
+    }
+    case ACCOUNT_REGISTRATION_SUCCESS: {
+      localStorage.setItem('token', payload.token);
+      return {
+        ...state,
+        ...payload,
+        isLoading: false,
+        isAuth: true,
+      };
+    }
+    case ACCOUNT_REGISTRATION_FAIL: {
+      return {
+        ...state,
+        email: null,
+        token: null,
+        isLoading: false,
+        isAuth: false,
+      };
+    }
+
+    case ACCOUNT_LOGOUT: {
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        email: null,
+        token: null,
+        isLoading: false,
+        isAuth: false,
+      }
     }
 
     default: {

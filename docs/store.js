@@ -1,4 +1,9 @@
 {
+  modal: {
+    login: {
+      isOpen
+    }
+  }
   account: {
     email,
     token,

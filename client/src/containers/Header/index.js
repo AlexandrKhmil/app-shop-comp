@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { modalLoginOpen, modalRegOpen } from '../../actions/modal';
+import { logoutUser } from '../../actions/account';
 
 const Header = (
   { 
     isAuth,
     email,
+    logoutUser,
     modalLoginOpen,
     modalRegOpen,
   }) => {
@@ -37,7 +39,8 @@ const Header = (
       </li>
       <li className="nav-item">
         <button 
-          className="nav-link btn btn-link">
+          className="nav-link btn btn-link"
+          onClick={logoutUser}>
           Logout
         </button>
       </li>
@@ -69,6 +72,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch(logoutUser()),
   modalLoginOpen: () => dispatch(modalLoginOpen()),
   modalRegOpen: () => dispatch(modalRegOpen()),
 });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { jsonRequest } from '../functions';
-import { modalLoginClose } from './modal';
+import { modalLoginClose, modalRegClose } from './modal';
 import {
   ACCOUNT_AUTH_REQUEST,
   ACCOUNT_AUTH_SUCCESS,
@@ -9,6 +9,12 @@ import {
   ACCOUNT_LOGIN_REQUEST,
   ACCOUNT_LOGIN_SUCCESS,
   ACCOUNT_LOGIN_FAIL,
+
+  ACCOUNT_REGISTRATION_REQUEST,
+  ACCOUNT_REGISTRATION_SUCCESS,
+  ACCOUNT_REGISTRATION_FAIL,
+
+  ACCOUNT_LOGOUT,
 } from '../constants/types';
 
 const authRequest = () => ({
@@ -37,6 +43,23 @@ const loginFail = () => ({
   type: ACCOUNT_LOGIN_FAIL,
 });
 
+const regRequest = () => ({
+  type: ACCOUNT_REGISTRATION_REQUEST,
+})
+
+const regSuccess = (data) => ({
+  type: ACCOUNT_REGISTRATION_SUCCESS,
+  payload: data,
+})
+
+const regFail = () => ({
+  type: ACCOUNT_REGISTRATION_FAIL,
+})
+
+export const logoutUser = () => ({
+  type: ACCOUNT_LOGOUT,
+})
+
 export const authUser = (token) => (dispatch) => {
   dispatch(authRequest());
   const { config } = jsonRequest({ headers: { token } });
@@ -61,3 +84,16 @@ export const loginUser = ({ email, password }) => (dispatch) => {
       dispatch(loginFail());
     });
 };
+
+export const registrationUser = ({ email, password }) => (dispatch) => {
+  dispatch(regRequest());
+  const { config, body } = jsonRequest({ body: { email, password }});
+  axios.post('/api/account/registration', body, config)
+  .then((res) => {
+    dispatch(regSuccess(res.data));
+    dispatch(modalRegClose());
+  })
+  .catch((error) => {
+    dispatch(regFail());
+  });
+}

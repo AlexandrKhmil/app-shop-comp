@@ -62,9 +62,9 @@ router.post(
   }
 );
 
-// POST `api/account/register`
+// POST `api/account/registration`
 router.post(
-  '/register', 
+  '/registration', 
   [
     body('email', 'Error').normalizeEmail().isEmail(),
     body('password', 'Error').isLength({ min: 5 })
