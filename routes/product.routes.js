@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 const account = require('../middleware/account.middleware');
 const error = require('../middleware/error.middleware');
 
+// GET 'api/product/list'
 router.get(
   '/list',
   async (req, res) => {
@@ -26,6 +27,7 @@ router.get(
   }
 );
 
+// GET 'api/product/{link}/info'
 router.get(
   '/:link/info',
   async (req, res) => {
@@ -47,6 +49,7 @@ router.get(
   }
 );
 
+// POST 'api/product/{link}/rate'
 router.post(
   '/:link/rate',
   account, 
@@ -67,6 +70,7 @@ router.post(
   }
 );
 
+// DELETE 'api/product/{link}/rate'
 router.delete(
   '/:link/rate', 
   account,
@@ -85,6 +89,7 @@ router.delete(
   }
 );
 
+// POST 'api/product/{link}/review'
 router.post(
   '/:link/review', 
   account, 
@@ -108,6 +113,7 @@ router.post(
   }
 );
 
+// DELETE 'api/product/{link}/review'
 router.delete(
   '/:link/review',
   account,
@@ -126,6 +132,7 @@ router.delete(
   }
 );
 
+// POST 'api/product/{link}/info/{id}'
 router.post(
   '/:link/review/:id',
   account,
@@ -146,6 +153,7 @@ router.post(
   }
 );
 
+// DELETE 'api/product/{link}/info/{id}'
 router.delete(
   '/:link/review/:id',
   account,
