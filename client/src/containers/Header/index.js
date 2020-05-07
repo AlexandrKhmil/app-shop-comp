@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { modalLoginOpen } from '../../actions/modal';
+import { modalLoginOpen, modalRegOpen } from '../../actions/modal';
 
 const Header = (
   { 
     isAuth,
     modalLoginOpen,
+    modalRegOpen,
   }) => {
 
   const unauthLinks = (
@@ -20,7 +21,8 @@ const Header = (
       </li>
       <li className="nav-item">
         <button 
-          className="nav-link btn btn-link">
+          className="nav-link btn btn-link"
+          onClick={modalRegOpen}>
           Register
         </button>
       </li>
@@ -66,6 +68,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   modalLoginOpen: () => dispatch(modalLoginOpen()),
+  modalRegOpen: () => dispatch(modalRegOpen()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
