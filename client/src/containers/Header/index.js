@@ -59,7 +59,10 @@ const Header = (
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/">Home</NavLink>
+              <NavLink className="nav-link" exact to="/">Home</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/checkout">Checkout</NavLink>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto align-items-center">

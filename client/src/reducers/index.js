@@ -3,6 +3,7 @@ import message from './message';
 import modal from './modal';
 import account from './account';
 import cart from './cart';
+import categories from './categories';
 import product from './product';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   modal,
   account, 
   cart,
+  categories,
   product,
 });

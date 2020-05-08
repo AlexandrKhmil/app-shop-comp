@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Sidebar from '../../containers/Sidebar';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
 import { getProductList } from '../../actions/product';
@@ -20,10 +21,7 @@ const Home = (
       <div className="container-fluid mt-5">
         <div className="row">
           <div className="col-12 col-lg-3 mb-3">
-            <aside className="card card-body border-primary">
-              <h2>Категории</h2>
-              <p>...</p>
-            </aside>
+            <Sidebar /> 
           </div>
           <div className="col-12 col-lg-9">
             <div className="row">
@@ -43,7 +41,7 @@ const Home = (
                     <button 
                       className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
                       onClick={() => getProductList({ offset })}
-                      disable={isLoading}>
+                      disabled={isLoading}>
                       <img src={require('../../static/reload.svg')} />
                     </button> 
                     <span>
@@ -60,13 +58,21 @@ const Home = (
   );
 };
 
-const mapStateToProps = (state) => ({
-  productList: Object.values(state.product.list),
-  isLoading: state.product.isLoading,
-  isLoaded: state.product.isLoaded,
-  offset: state.product.offset,
-  didLoadedAll: state.product.didLoadedAll,
-});
+const mapStateToProps = (state) => {
+  const activeCategory = state.categories.active;
+  let productList = Object.values(state.product.list)
+  if (activeCategory) {
+    productList = productList.filter((product) => 
+      product.category === activeCategory); 
+  } 
+  return {
+    productList,
+    isLoading: state.product.isLoading,
+    isLoaded: state.product.isLoaded,
+    offset: state.product.offset,
+    didLoadedAll: state.product.didLoadedAll,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   getProductList: (value) => dispatch(getProductList(value)),

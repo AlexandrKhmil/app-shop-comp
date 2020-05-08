@@ -17,6 +17,7 @@ import Registration from './components/Registration';
 import CartList from './components/CartList';
 import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
+import { getCategoriesList } from './actions/categories';
 import { getProductList } from './actions/product';
 import { 
   modalLoginClose, 
@@ -29,8 +30,11 @@ const App = (
     token,
     isAuth,
     authUser,
-    isLoading,
-    isLoaded,
+    categoriesIsLoading,
+    categoriesIsLoaded,
+    getCategoriesList,
+    productIsLoading,
+    productIsLoaded,
     getProductList,
     modalLoginIsOpen, 
     modalLoginClose,
@@ -44,8 +48,11 @@ const App = (
     if(token && !isAuth) authUser(token);
   }, [token, isAuth, authUser]);
   useEffect(() => {
-    if(!isLoaded && !isLoading) getProductList();
-  }, [isLoading, isLoaded, getProductList]);
+    if(!categoriesIsLoaded && !categoriesIsLoading) getCategoriesList();
+  }, [categoriesIsLoading, categoriesIsLoaded, getCategoriesList]);
+  useEffect(() => {
+    if(!productIsLoaded && !productIsLoading) getProductList();
+  }, [productIsLoading, productIsLoaded, getProductList]);
 
   const alertOptions = {
     position: positions.TOP_CENTER,
@@ -97,8 +104,10 @@ const App = (
 const mapStateToProps = (state) => ({
   token: state.account.token,
   isAuth: state.account.isAuth,
-  isLoading: state.product.isLoading,
-  isLoaded: state.product.isLoaded,
+  categoriesIsLoading: state.categories.isLoading,
+  categoriesIsLoaded: state.categories.isLoaded,
+  productIsLoading: state.product.isLoading,
+  productIsLoaded: state.product.isLoaded,
   modalLoginIsOpen: state.modal.login.isOpen,
   modalRegIsOpen: state.modal.registration.isOpen,
   modalCartIsOpen: state.modal.cart.isOpen,
@@ -106,6 +115,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   authUser: (value) => authUser(value)(dispatch),
+  getCategoriesList: () => getCategoriesList()(dispatch),
   getProductList: (value) => getProductList(value)(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
