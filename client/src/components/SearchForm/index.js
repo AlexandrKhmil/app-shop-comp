@@ -8,10 +8,11 @@ const SearchForm = ({ className }) => {
   };
   return (
     <form 
-      className={`form-inline ${className}`}
+      className={`form-inline flex-nowrap ${className}`}
       onSubmit={onSubmit}>
       <input 
-        className="form-control flex-grow-1 mr-3"
+        className="form-control flex-grow-1 flex-shrink-1 mr-3"
+        style={{ minWidth: '0' }}
         type="text"
         name="name"
         value={name}

@@ -1,0 +1,9 @@
+.reload {
+  width: 100px;
+  height: 100px;
+}
+
+.reload img {
+  width: 75%;
+  object-fit: contain;
+}
