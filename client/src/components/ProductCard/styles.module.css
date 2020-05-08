@@ -1,4 +1,16 @@
 .img {
   object-fit: contain;
-  max-height: 200px;
+  min-height: 140px;
+  max-height: 140px;
+  max-width: 100%;
+}
+
+.btn { 
+  height: 30px;
+}
+
+.btn img {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
 }
