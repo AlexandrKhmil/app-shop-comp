@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
+import { getProductList } from '../../actions/product';
 import styles from './styles.module.css';
 
 const Home = (
@@ -9,6 +10,9 @@ const Home = (
     productList,
     isLoading,
     isLoaded,
+    offset,
+    getProductList,
+    didLoadedAll,
   }
 ) => {
   return (
@@ -33,14 +37,21 @@ const Home = (
                 </div>
               )}
 
-              <div className="col-12 col-md-4 col-xl-3 mb-3">
-                <div className="card card-body border-0 h-100 d-flex justify-content-center align-items-center">
-                  <button className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}>
-                    <img src={require('../../static/reload.svg')} />
-                  </button> 
-                  <span>Загрузить еще...</span>
+              { !didLoadedAll &&
+                <div className="col-12 col-md-4 col-xl-3 mb-3">
+                  <div className="card card-body border-0 h-100 d-flex justify-content-center align-items-center">
+                    <button 
+                      className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
+                      onClick={() => getProductList({ offset })}
+                      disable={isLoading}>
+                      <img src={require('../../static/reload.svg')} />
+                    </button> 
+                    <span>
+                      {!isLoading ? 'Загрузить еще...' : 'Идет загрузка...'}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              } 
             </div>
           </div>
         </div>
@@ -53,10 +64,12 @@ const mapStateToProps = (state) => ({
   productList: Object.values(state.product.list),
   isLoading: state.product.isLoading,
   isLoaded: state.product.isLoaded,
+  offset: state.product.offset,
+  didLoadedAll: state.product.didLoadedAll,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  
+  getProductList: (value) => dispatch(getProductList(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

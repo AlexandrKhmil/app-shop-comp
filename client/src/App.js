@@ -10,6 +10,7 @@ import Alert from './containers/Alert';
 import AlertTemplate from './components/AlertTemplate';
 import Header from './containers/Header';
 import Home from './pages/Home';
+import Checkout from './pages/Checkout';
 import Modal from './containers/Modal';
 import Login from './components/Login';
 import Registration from './components/Registration';
@@ -86,6 +87,7 @@ const App = (
         </Modal>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/checkout" component={Checkout} />
         </Switch>
       </Router>
     </AlertProvider>
@@ -104,7 +106,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   authUser: (value) => authUser(value)(dispatch),
-  getProductList: () => getProductList()(dispatch),
+  getProductList: (value) => getProductList(value)(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
   modalCartClose: () => dispatch(modalCartClose()),

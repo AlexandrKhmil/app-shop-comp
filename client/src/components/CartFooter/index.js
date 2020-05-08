@@ -10,7 +10,7 @@ const CartFooter = ({ totalPrice }) => (
     </div>
     <button
       className="btn btn-primary btn-lg btn-block">
-      Place order
+      Go to Checkout
     </button>
   </div> 
 );

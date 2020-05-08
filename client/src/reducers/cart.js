@@ -5,10 +5,7 @@ import {
 } from '../constants/types';
 
 const initialState = {
-  list: { 
-    2: { id: 2, quantity: 1},
-    1: { id: 1, quantity: 1},
-  }
+  list: {}
 };
 
 export default (state = initialState, { type, payload }) => {
