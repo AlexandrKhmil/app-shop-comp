@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { cartAddProduct } from '../../actions/cart'
 import styles from './styles.module.css';
 
 const ProductCart = (
   { 
+    id,
     title, 
     img_url, 
     link, 
@@ -12,7 +15,8 @@ const ProductCart = (
     rate, 
     vote_count, 
     review_count, 
-    tag_list 
+    tag_list,
+    cartAddProduct,
   }
 ) => (
   <div className="card card-body h-100"> 
@@ -60,12 +64,21 @@ const ProductCart = (
 
     <div>{price} ₴</div>
 
-    <button className={`btn btn-primary 
-      d-flex justify-content-center p-1 mt-auto ${styles.btn}`}>
+    <button 
+      className={`btn btn-primary d-flex justify-content-center p-1 mt-auto ${styles.btn}`}
+      onClick={() => cartAddProduct(id)}>
       Добавить 
       <img className="ml-2" src={require('../../static/shopping-cart.svg')} />
     </button>
   </div>
 );
 
-export default ProductCart;
+const mapStateToProps = (state) => ({
+  
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  cartAddProduct: (value) => dispatch(cartAddProduct(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCart);
