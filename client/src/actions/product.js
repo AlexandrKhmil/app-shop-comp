@@ -8,6 +8,8 @@ import {
 
   PRODUCT_PAGE_CHANGE,
   PRODUCT_PAGE_END,
+
+  PRODUCT_SET_SORT,
 } from '../constants/types';
 
 const productListRequest = () => ({
@@ -30,16 +32,24 @@ const productPageChange = (offset) => ({
 
 const productPageEnd = () => ({
   type: PRODUCT_PAGE_END,
+});
+
+export const productSetSort = (sortType) => ({
+  type: PRODUCT_SET_SORT,
+  payload: sortType,
 })
 
 export const getProductList = (
   { 
     limit = 9, 
-    offset, 
+    offset,
+    category,  
   } = { limit: 9, offset: 0}
 ) => (dispatch) => {
   dispatch(productListRequest());
-  const { config } = jsonRequest({ headers: { limit, offset } });
+  const headers = { limit, offset };
+  // if (category) headers['category'] = category;
+  const { config } = jsonRequest({ headers });
   axios.get('api/product/list', config)
     .then((res) => {
       dispatch(productListSuccess(res.data));

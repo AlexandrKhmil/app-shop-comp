@@ -4,11 +4,13 @@ import Sidebar from '../../containers/Sidebar';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
 import { getProductList } from '../../actions/product';
+import { sortTypes } from '../../constants/sorts';
 import styles from './styles.module.css';
 
 const Home = (
   {
     productList,
+    activeCategory, 
     isLoading,
     isLoaded,
     offset,
@@ -40,7 +42,7 @@ const Home = (
                   <div className="card card-body border-0 h-100 d-flex justify-content-center align-items-center">
                     <button 
                       className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
-                      onClick={() => getProductList({ offset })}
+                      onClick={() => getProductList({ offset, category: activeCategory })}
                       disabled={isLoading}>
                       <img src={require('../../static/reload.svg')} />
                     </button> 
@@ -58,15 +60,37 @@ const Home = (
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {  
   const activeCategory = state.categories.active;
+  const sortType = state.product.sortType;
   let productList = Object.values(state.product.list)
   if (activeCategory) {
     productList = productList.filter((product) => 
       product.category === activeCategory); 
-  } 
+  }
+  switch (sortType) {
+    case sortTypes.PRICE_ASC: {
+      productList = productList.sort((a, b) => a.price - b.price);
+      break;
+    }
+    case sortTypes.PRICE_DESC: {
+      productList = productList.sort((a, b) => b.price - a.price);
+      break;
+    }
+    case sortTypes.DATE_ASC: {
+      productList = productList.sort((a, b) => a.create_time - b.create_time);
+      break;
+    }
+    case sortTypes.DATE_DESC: {
+      productList = productList.sort((a, b) => b.create_time - a.create_time);
+      break;
+    }
+    default: break;
+  }
+
   return {
     productList,
+    activeCategory,
     isLoading: state.product.isLoading,
     isLoaded: state.product.isLoaded,
     offset: state.product.offset,

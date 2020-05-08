@@ -5,7 +5,10 @@ import {
 
   PRODUCT_PAGE_CHANGE,
   PRODUCT_PAGE_END,
+
+  PRODUCT_SET_SORT,
 } from '../constants/types';
+import { sortTypes } from '../constants/sorts';
 
 const initialState = {
   list: {},
@@ -13,6 +16,7 @@ const initialState = {
   didLoadedAll: false,
   isLoading: false,
   isLoaded: false,
+  sortType: sortTypes.DATE_DESC,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -53,6 +57,13 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         didLoadedAll: true,
+      }
+    }
+
+    case PRODUCT_SET_SORT: {
+      return {
+        ...state,
+        sortType: payload,
       }
     }
     default: {

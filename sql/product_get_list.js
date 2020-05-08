@@ -8,10 +8,9 @@ module.exports = ({
   pricemax,
   sort,
   sortway,
-}) => {
-  const categoryTouple = category && touple(category),
-        tagTouple = tag && touple(tag),
-        titleSample = title && `'%${title}%'`;
+}) => { 
+  const tagTouple = tag && touple(tag);
+  const titleSample = title && `'%${title}%'`;
   let sortSQL = sort === 'price' ? 'p.price' : 'p.create_time';
   sortSQL += sortway === 'desc' ? ' DESC' : ' ASC';
   return `
@@ -35,7 +34,7 @@ module.exports = ({
       LEFT JOIN review AS rev ON rev.product_id = p.id
       ${tagTouple ? 'LEFT JOIN tag ON tag.product_id = p.id' : ''}
     WHERE status = 'default'
-      ${categoryTouple ? `AND category IN ${categoryTouple}` : ''}
+      ${category ? `AND category = '${category}'` : ''}
       ${tagTouple ? `AND tag IN ${tagTouple}` : ''}
       ${titleSample ? `AND title LIKE ${titleSample}` : ''}
       ${pricemin ? `AND price >= ${pricemin}` : ''}
