@@ -4,7 +4,7 @@ import { categoriesSetActive } from '../../actions/categories';
 import { productSetSort } from '../../actions/product';
 import { sortTypes } from '../../constants/sorts';
 
-const Sidebar = ({ list, active, categoriesSetActive, productSetSort, activeSortType }) => {
+const Sidebar = ({ categoriesList, active, categoriesSetActive, tagList, productSetSort, activeSortType }) => {
   return (
     <aside>
       <div className="card card-body border-primary mb-3">
@@ -38,7 +38,7 @@ const Sidebar = ({ list, active, categoriesSetActive, productSetSort, activeSort
       <div className="card card-body border-primary mb-3">
         <h3 className="border-bottom border-light pb-2 mb-3">Категории</h3>
         <div className="d-flex flex-column align-items-start"> 
-          {list.map((category, index) =>
+          {categoriesList.map((category, index) =>
             <button 
               className={`btn mb-2 ${active !== category ? 'btn-outline-primary' : 'btn-primary'}`}
               onClick={() => categoriesSetActive(category)}
@@ -52,6 +52,13 @@ const Sidebar = ({ list, active, categoriesSetActive, productSetSort, activeSort
       <div className="card card-body border-primary mb-3">
         <h3 className="border-bottom border-light pb-2 mb-3">Тэги</h3>
         <div className="d-flex flex-column align-items-start"> 
+          {tagList.map((tag, index) =>
+            <button 
+              className={`btn mb-2 btn-outline-primary`} 
+              key={index}>
+              {tag}
+            </button>
+          )}
         </div>
       </div>
     </aside>
@@ -59,7 +66,8 @@ const Sidebar = ({ list, active, categoriesSetActive, productSetSort, activeSort
 };
 
 const mapStateToProps = (state) => ({
-  list: Object.values(state.categories.list),
+  categoriesList: Object.values(state.categories.list),
+  tagList: Object.values(state.tags.list),
   active: state.categories.active,
   activeSortType: state.product.sortType,
 });

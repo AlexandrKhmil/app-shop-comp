@@ -18,6 +18,7 @@ import CartList from './components/CartList';
 import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
 import { getCategoriesList } from './actions/categories';
+import { getTagsList } from './actions/tags';
 import { getProductList } from './actions/product';
 import { 
   modalLoginClose, 
@@ -30,12 +31,19 @@ const App = (
     token,
     isAuth,
     authUser,
+
     categoriesIsLoading,
     categoriesIsLoaded,
     getCategoriesList,
+
+    tagsIsLoading,
+    tagsIsLoaded,
+    getTagsList,
+
     productIsLoading,
     productIsLoaded,
     getProductList,
+
     modalLoginIsOpen, 
     modalLoginClose,
     modalRegIsOpen,
@@ -50,6 +58,9 @@ const App = (
   useEffect(() => {
     if(!categoriesIsLoaded && !categoriesIsLoading) getCategoriesList();
   }, [categoriesIsLoading, categoriesIsLoaded, getCategoriesList]);
+  useEffect(() => {
+    if(!tagsIsLoaded && !tagsIsLoading) getTagsList();
+  }, [tagsIsLoading, tagsIsLoaded, getTagsList]);
   useEffect(() => {
     if(!productIsLoaded && !productIsLoading) getProductList();
   }, [productIsLoading, productIsLoaded, getProductList]);
@@ -106,6 +117,8 @@ const mapStateToProps = (state) => ({
   isAuth: state.account.isAuth,
   categoriesIsLoading: state.categories.isLoading,
   categoriesIsLoaded: state.categories.isLoaded,
+  tagsIsLoading: state.tags.isLoading,
+  tagsIsLoaded: state.tags.isLoaded,
   productIsLoading: state.product.isLoading,
   productIsLoaded: state.product.isLoaded,
   modalLoginIsOpen: state.modal.login.isOpen,
@@ -116,6 +129,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   authUser: (value) => authUser(value)(dispatch),
   getCategoriesList: () => getCategoriesList()(dispatch),
+  getTagsList: () => getTagsList()(dispatch),
   getProductList: (value) => getProductList(value)(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),

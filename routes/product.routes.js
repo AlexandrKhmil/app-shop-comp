@@ -48,6 +48,27 @@ router.get(
   }
 );
 
+// GET 'api/product/tags/'
+router.get(
+  '/tags',
+  async (req, res) => {
+    try {
+      const query = require('../sql/product_get_tags');
+      
+      const result = await db.any(query)
+        .then((data) => data)
+        .catch((error) => ({ error }));
+      if (result.error) {
+        return res.status(500).json({ msg: 'Error1', error: result.error });
+      }
+
+      return res.status(200).json(result.map((tag) => tag.tag));
+    } catch(error) {
+      return res.status(500).json({ msg: 'Error' });
+    }
+  }
+);
+
 // GET 'api/product/{link}/info'
 router.get(
   '/:link/info',
