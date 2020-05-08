@@ -13,9 +13,15 @@ import Home from './pages/Home';
 import Modal from './containers/Modal';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import CartList from './components/CartList';
+import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
 import { getProductList } from './actions/product';
-import { modalLoginClose, modalRegClose } from './actions/modal';
+import { 
+  modalLoginClose, 
+  modalRegClose, 
+  modalCartClose 
+} from './actions/modal';
 
 const App = (
   { 
@@ -29,6 +35,8 @@ const App = (
     modalLoginClose,
     modalRegIsOpen,
     modalRegClose,
+    modalCartIsOpen,
+    modalCartClose,
   }
 ) => {
   useEffect(() => {
@@ -53,16 +61,28 @@ const App = (
         <Header />
         <Alert />
         <Modal 
+          className="w-100"
           isOpen={modalLoginIsOpen} 
           close={modalLoginClose} 
-          title={'Login'}>
+          title="Login">
           <Login />
         </Modal>
         <Modal 
+          className="w-100"
           isOpen={modalRegIsOpen} 
           close={modalRegClose} 
-          title={'Registration'}>
+          title="Registration">
           <Registration />
+        </Modal>
+        <Modal 
+          className="h-100 m-0 ml-auto"
+          classNameContent="h-100"
+          classNameBody="overflow-auto"
+          isOpen={modalCartIsOpen}
+          close={modalCartClose}
+          title="Cart"
+          Footer={CartFooter}>
+          <CartList />
         </Modal>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -79,6 +99,7 @@ const mapStateToProps = (state) => ({
   isLoaded: state.product.isLoaded,
   modalLoginIsOpen: state.modal.login.isOpen,
   modalRegIsOpen: state.modal.registration.isOpen,
+  modalCartIsOpen: state.modal.cart.isOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -86,6 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProductList: () => getProductList()(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
+  modalCartClose: () => dispatch(modalCartClose()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

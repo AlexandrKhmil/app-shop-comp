@@ -5,7 +5,7 @@ import {
 } from '../constants/types';
 
 const initialState = {
-  list: [],
+  list: {},
   isLoading: false,
   isLoaded: false,
 };
@@ -20,9 +20,12 @@ export default (state = initialState, { type, payload }) => {
       };
     }
     case PRODUCT_LIST_SUCCESS: {
+      const list = Object.fromEntries(payload.map((product) => 
+        [product.id, {...product }]
+      ));
       return {
         ...state,
-        list: payload,
+        list,
         isLoading: false,
         isLoaded: true,
       };

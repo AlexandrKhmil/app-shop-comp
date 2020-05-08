@@ -23,7 +23,7 @@ export const getProductList = () => (dispatch) => {
   dispatch(productListRequest());
   axios.get('api/product/list')
     .then((res) => {
-      dispatch(productListSuccess({ ...res.data }));
+      dispatch(productListSuccess(res.data));
     })
     .catch((error) => {
       dispatch(productListFail());

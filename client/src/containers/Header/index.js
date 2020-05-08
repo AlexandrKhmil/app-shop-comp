@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { modalLoginOpen, modalRegOpen } from '../../actions/modal';
+import { 
+  modalLoginOpen, 
+  modalRegOpen, 
+  modalCartOpen 
+} from '../../actions/modal';
 import { logoutUser } from '../../actions/account';
 
 const Header = (
@@ -11,6 +15,7 @@ const Header = (
     logoutUser,
     modalLoginOpen,
     modalRegOpen,
+    modalCartOpen,
   }) => {
 
   const unauthLinks = (
@@ -48,8 +53,8 @@ const Header = (
   );
 
   return (
-    <header>
-      <nav className="navbar navbar-expand navbar-dark bg-primary">
+    <header className="pt-4 pb-5">
+      <nav className="navbar navbar-expand navbar-dark bg-primary fixed-top">
         <NavLink className="navbar-brand" to="/">Brand</NavLink>
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav mr-auto">
@@ -59,6 +64,13 @@ const Header = (
           </ul>
           <ul className="navbar-nav ml-auto align-items-center">
             {!isAuth ? unauthLinks : authLinks}
+            <li className="nav-item">
+              <button 
+                className="nav-link btn btn-link"
+                onClick={modalCartOpen}>
+                Cart
+              </button>
+            </li>
           </ul>
         </div>
       </nav>
@@ -75,6 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
   logoutUser: () => dispatch(logoutUser()),
   modalLoginOpen: () => dispatch(modalLoginOpen()),
   modalRegOpen: () => dispatch(modalRegOpen()),
+  modalCartOpen: () => dispatch(modalCartOpen()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -84,7 +84,7 @@ export const loginUser = ({ email, password }) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(loginFail());
-      resMessageShow(error.response.data)(dispatch);
+      resMessageShow(error.ёresponse.data)(dispatch);
     });
 };
 
@@ -92,12 +92,12 @@ export const registrationUser = ({ email, password }) => (dispatch) => {
   dispatch(regRequest());
   const { config, body } = jsonRequest({ body: { email, password }});
   axios.post('/api/account/registration', body, config)
-  .then((res) => {
-    dispatch(regSuccess(res.data));
-    dispatch(modalRegClose());
-  })
-  .catch((error) => {
-    dispatch(regFail());
-    resMessageShow(error.response.data)(dispatch);
-  });
-}
+    .then((res) => {
+      dispatch(regSuccess(res.data));
+      dispatch(modalRegClose());
+    })
+    .catch((error) => {
+      dispatch(regFail());
+      resMessageShow(error.response.data)(dispatch);
+    });
+};
