@@ -4,6 +4,8 @@ import Markdown from 'react-markdown';
 import { selectedGet } from '../../actions/selected';
 import InfoTable from '../../components/InfoTable';
 import Rating from '../../components/Rating';
+import ReviewList from '../../components/ReviewList';
+import ReviewForm from '../../components/ReviewForm';
 import { dateFormat } from '../../functions';
 import { cartAddProduct } from '../../actions/cart';
 import styles from './styles.module.css';
@@ -36,14 +38,14 @@ const Product = ({
     <main>
       <div className="container">
         <div className="row">
-          <div className="col-md-5 mb-3">
+          <div className="col-lg-5 mb-3">
             <div className="card card-body border-primary ">
               <img className={`mb-3 ${styles.img}`} src={product.img_url} alt="Product" />
               <Rating />
             </div> 
           </div>
 
-          <div className="col-md-7 mb-3">
+          <div className="col-lg-7 mb-3">
             <h1 className="mb-3">{product.title}</h1>
             <div className="card card-body border-primary">
               <InfoTable data={tableData}/>
@@ -59,6 +61,20 @@ const Product = ({
           <div className="col-12 mb-3">
             <div className="card card-body border-primary"> 
               <Markdown source={product.description} />
+            </div>
+          </div>
+
+          <div className="col-12 mb-3">
+            <div className="card card-body border-primary"> 
+              <h3>Оставить отзыв:</h3>
+              <ReviewForm />
+            </div>
+          </div>
+
+          <div className="col-12 mb-3">
+            <div className="card card-body border-primary">
+              <h3>Отзывы:</h3>
+              <ReviewList />
             </div>
           </div>
         </div>

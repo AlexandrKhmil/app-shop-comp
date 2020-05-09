@@ -39,21 +39,21 @@ const Login = ({ isLoading, loginUser }) => {
           disabled={isLoading} />
       </div>
       <div className="form-group d-flex justify-content-end mb-0">
-          <button 
-            className="btn btn-primary d-flex 
-              justify-content-between align-items-center"
-            disabled={isLoading} >
-            {isLoading && 
-              <span 
-                className="spinner-border spinner-border-sm mr-2"
-                role="status"
-                aria-hidden="true"
-              >
-              </span>
-            }
-            {!isLoading ? 'Enter' : 'Loading'}
-          </button>
-        </div>
+        <button 
+          className="btn btn-primary d-flex 
+            justify-content-between align-items-center"
+          disabled={isLoading} >
+          {isLoading && 
+            <span 
+              className="spinner-border spinner-border-sm mr-2"
+              role="status"
+              aria-hidden="true"
+            >
+            </span>
+          }
+          {!isLoading ? 'Enter' : 'Loading'}
+        </button>
+      </div>
     </form>
   );
 };
