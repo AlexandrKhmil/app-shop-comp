@@ -51,3 +51,6 @@ export const productGetList = ({
       dispatch(resMessageShow(err.response.data));
     })
 };
+
+
+//POST 'api/product/{link}/review'

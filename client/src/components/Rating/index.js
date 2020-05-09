@@ -21,8 +21,8 @@ const Rating = ({ isAuth, rating, votesCount }) => {
         }
         <div className="d-flex justify-content-center position-relative">
           <ul className={styles.starList}>
-            { Array(5).fill(0).map((emptyStar) => 
-              <li className={styles.star}>
+            { Array(5).fill(0).map((emptyStar, index) => 
+              <li className={styles.star} key={index}>
                 <img src={require('../../static/starGray.svg')} alt="Gray Star" />
               </li>
             )}
@@ -42,8 +42,8 @@ const Rating = ({ isAuth, rating, votesCount }) => {
           }
 
           <ul className={`${styles.starList} ${styles.starListColored}`}>
-            {ratingNormalization(rating).map((rating, key) => 
-              <li className={styles.star} key={key}>
+            {ratingNormalization(rating).map((rating, index) => 
+              <li className={styles.star} key={index}>
                 <img src={require('../../static/star.svg')} style={{ width: `${rating}%` }} alt="Star" />
               </li>
             )}

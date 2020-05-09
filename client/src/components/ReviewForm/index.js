@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { reviewAdd } from '../../actions/review';
 
-const ReviewForm = () => {
+const ReviewForm = ({ token, link, reviewAdd }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    reviewAdd({ token, link, title, text });
+  };
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="title">Заголовок</label>
         <input 
@@ -42,7 +50,16 @@ const ReviewForm = () => {
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default ReviewForm
+const mapStateToProps = (state) => ({
+  link: state.selected.data.link,
+  token: state.account.token,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  reviewAdd: (value) => dispatch(reviewAdd(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);

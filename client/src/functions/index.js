@@ -57,6 +57,16 @@ export const dateFormat = (date) => {
   return result;
 };
 
+export const dateTimeFormat = (date) => {
+  let result = '';
+  if (date) {
+    const arr = date.split('T')[0].split('-');
+    const arr2 = date.split('T')[1].split('Z')[0].split(':')
+    result = `${arr2[0]}:${arr2[1]} ${arr[2]}-${arr[1]}-${arr[0]}`;
+  }
+  return result;
+}
+
 export const ratingNormalization = (rating) => {
   let normalizedRating = rating / 5 * 500
   return Array(5).fill(0).map(() => {
