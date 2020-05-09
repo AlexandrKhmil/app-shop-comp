@@ -27,8 +27,8 @@ export const tagGetList = () => (dispatch) => {
     .then((res) => {
       dispatch(tagListSuccess(res.data));
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(tagListFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     });
 };

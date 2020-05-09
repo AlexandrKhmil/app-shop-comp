@@ -31,11 +31,10 @@ export const productSetSort = (sortType) => ({
   payload: sortType,
 });
 
-export const productGetList = (
-  { 
+export const productGetList = ({ 
     limit = 9, 
     offset,
-  } = { limit: 9, offset: 0}
+  } = { limit: 9, offset: 0 }
 ) => (dispatch) => {
   dispatch(productListRequest());
   const { config } = jsonRequest({ headers: { limit, offset } });
@@ -47,8 +46,8 @@ export const productGetList = (
         dispatch(productPageEnd());
       }
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(productListFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     })
 };

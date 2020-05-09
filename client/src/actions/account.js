@@ -55,9 +55,9 @@ export const authUser = (token) => (dispatch) => {
     .then((res) => {
       dispatch(authSuccess(res.data));
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(authFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     });
 };
 
@@ -69,9 +69,9 @@ export const loginUser = ({ email, password }) => (dispatch) => {
       dispatch(loginSuccess(res.data));
       dispatch(modalLoginClose());
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(loginFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     });
 };
 
@@ -83,8 +83,8 @@ export const registrationUser = ({ email, password }) => (dispatch) => {
       dispatch(registrationSuccess(res.data));
       dispatch(modalRegClose());
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(registrationFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     });
 };

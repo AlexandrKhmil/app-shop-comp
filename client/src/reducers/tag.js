@@ -32,7 +32,7 @@ export default (state = initialState, { type, payload }) => {
     }
     case actionType.TAG_SET_ACTIVE: {
       const list = Object.values(state.list).map((tag) => {
-        return tag === payload ? { ...tag, isActive: !tag.isActive } : tag;
+        return tag.tag === payload ? { ...tag, isActive: !tag.isActive } : tag;
       }); 
       return {
         ...state,

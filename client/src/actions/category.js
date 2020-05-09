@@ -27,8 +27,8 @@ export const categoryGetList = () => (dispatch) => {
     .then((res) => {
       dispatch(categoryListSuccess(res.data));
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch(categoryListFail());
-      resMessageShow(error.response.data)(dispatch);
+      dispatch(resMessageShow(err.response.data));
     });
 };

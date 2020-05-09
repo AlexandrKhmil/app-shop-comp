@@ -22,7 +22,7 @@ export const tagFilter = ({ tagList, productList }) => {
   if (activeTagList.length > 0) {
     productList = productList.filter((product) => { 
       return product.tag_list.length > 0 
-        && product.tag_list.some((tag) => tagList.indexOf(tag) >= 0);
+        && product.tag_list.some((tag) => activeTagList.indexOf(tag) >= 0);
     });
   }
   return productList;
