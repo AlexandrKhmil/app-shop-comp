@@ -42,28 +42,6 @@ const CartList = ({ list, cartClearProducrt }) => {
   );
 };
 
-
-{/* <div className="d-flex flex-column ml-auto">
-												<button 
-													className={`mb-auto ${styles.button} ${styles.buttonRed}`}
-													onClick={() => deleteFromCart(product)}
-												>
-													
-												</button>
-												<button 
-													className={`mb-1 ${styles.button}`}
-													onClick={() => addToCart(product)}
-												>
-													+
-												</button>
-												<button 
-													className={`${styles.button}`}
-													onClick={() => removeFromCart(product)}
-												>
-													-
-												</button>
-											</div> */}
-
 const mapStateToProps = (state) => {
   const products = Object.values(state.product.list);
   const list = Object.values(state.cart.list)

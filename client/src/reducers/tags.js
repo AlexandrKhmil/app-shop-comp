@@ -3,7 +3,7 @@ import {
   TAGS_LIST_SUCCESS,
   TAGS_LIST_FAIL,
 
-  // CATEGORIES_SET_ACTIVE,
+  TAGS_SET_ACTIVE,
 } from '../constants/types';
 
 const initialState = {
@@ -24,7 +24,7 @@ export default (state = initialState, { type, payload }) => {
     case TAGS_LIST_SUCCESS: { 
       return {
         ...state,
-        list: { ...payload },
+        list: { ...payload.map((tag) => ({ tag, isActive: false })) },
         isLoading: false,
         isLoaded: true,
       };
@@ -37,12 +37,17 @@ export default (state = initialState, { type, payload }) => {
       };
     }
 
-    // case CATEGORIES_SET_ACTIVE: {
-    //   return {
-    //     ...state,
-    //     active: state.active !== payload ? payload : null,
-    //   }
-    // }
+    case TAGS_SET_ACTIVE: {
+      const list = Object.values(state.list).map(({ tag, isActive }) => {
+        return tag === payload 
+          ? { tag, isActive: !isActive } 
+          : { tag, isActive };
+      }); 
+      return {
+        ...state,
+        list: { ...list },
+      };
+    }
     default: {
       return state;
     }

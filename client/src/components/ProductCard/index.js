@@ -68,7 +68,7 @@ const ProductCart = (
       className={`btn btn-primary d-flex justify-content-center p-1 mt-auto ${styles.btn}`}
       onClick={() => cartAddProduct(id)}>
       Добавить 
-      <img className="ml-2" src={require('../../static/shopping-cart.svg')} />
+      <img className="ml-2" src={require('../../static/shopping-cart.svg')} alt="Cart" />
     </button>
   </div>
 );

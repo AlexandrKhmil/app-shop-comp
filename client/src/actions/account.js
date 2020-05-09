@@ -24,7 +24,7 @@ const authRequest = () => ({
 
 const authSuccess = (data) => ({
   type: ACCOUNT_AUTH_SUCCESS,
-  payload: data
+  payload: data,
 });
 
 const authFail = () => ({

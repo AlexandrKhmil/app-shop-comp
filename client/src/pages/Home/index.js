@@ -44,7 +44,7 @@ const Home = (
                       className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
                       onClick={() => getProductList({ offset, category: activeCategory })}
                       disabled={isLoading}>
-                      <img src={require('../../static/reload.svg')} />
+                      <img src={require('../../static/reload.svg')} alt="Reload" />
                     </button> 
                     <span>
                       {!isLoading ? 'Загрузить еще...' : 'Идет загрузка...'}
@@ -61,13 +61,25 @@ const Home = (
 };
 
 const mapStateToProps = (state) => {  
-  const activeCategory = state.categories.active;
-  const sortType = state.product.sortType;
   let productList = Object.values(state.product.list)
+
+  const activeCategory = state.categories.active; 
   if (activeCategory) {
     productList = productList.filter((product) => 
       product.category === activeCategory); 
   }
+
+  const activeTags = Object.values(state.tags.list)
+    .filter((tag) => tag.isActive)
+    .map((tag) => tag.tag);
+  if (activeTags.length > 0) {
+    productList = productList.filter((product) => { 
+      return product.tag_list.length > 0 
+        && product.tag_list.some((tag) => activeTags.indexOf(tag) >= 0);
+    });
+  }
+
+  const sortType = state.product.sortType;
   switch (sortType) {
     case sortTypes.PRICE_ASC: {
       productList = productList.sort((a, b) => a.price - b.price);

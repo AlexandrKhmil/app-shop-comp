@@ -4,6 +4,8 @@ import {
   TAGS_LIST_REQUEST,
   TAGS_LIST_SUCCESS,
   TAGS_LIST_FAIL, 
+
+  TAGS_SET_ACTIVE,
 } from '../constants/types';
 
 const tagsListRequest = () => ({ 
@@ -19,10 +21,10 @@ const tagsListFail = () => ({
   type: TAGS_LIST_FAIL,
 });
 
-// export const categoriesSetActive = (category) => ({
-//   type: CATEGORIES_SET_ACTIVE,
-//   payload: category,
-// });
+export const tagsSetActive = (tag) => ({
+  type: TAGS_SET_ACTIVE,
+  payload: tag,
+});
 
 export const getTagsList = () => (dispatch) => {
   dispatch(tagsListRequest());

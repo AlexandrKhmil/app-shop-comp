@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { 
@@ -16,7 +16,8 @@ const Header = (
     modalLoginOpen,
     modalRegOpen,
     modalCartOpen,
-  }) => {
+  }
+) => {
 
   const unauthLinks = (
     <>

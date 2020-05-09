@@ -43,7 +43,7 @@ export const getProductList = (
   { 
     limit = 9, 
     offset,
-    category,  
+    // category,  
   } = { limit: 9, offset: 0}
 ) => (dispatch) => {
   dispatch(productListRequest());

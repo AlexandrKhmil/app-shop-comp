@@ -1,10 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { categoriesSetActive } from '../../actions/categories';
+import { tagsSetActive } from '../../actions/tags'; 
 import { productSetSort } from '../../actions/product';
 import { sortTypes } from '../../constants/sorts';
 
-const Sidebar = ({ categoriesList, active, categoriesSetActive, tagList, productSetSort, activeSortType }) => {
+const Sidebar = (
+  { 
+    categoriesList, 
+    active, 
+    categoriesSetActive, 
+    tagList, 
+    tagsSetActive,
+    productSetSort, 
+    activeSortType, 
+  }
+) => {
   return (
     <aside>
       <div className="card card-body border-primary mb-3">
@@ -54,9 +65,10 @@ const Sidebar = ({ categoriesList, active, categoriesSetActive, tagList, product
         <div className="d-flex flex-column align-items-start"> 
           {tagList.map((tag, index) =>
             <button 
-              className={`btn mb-2 btn-outline-primary`} 
+              className={`btn mb-2 ${!tag.isActive ? 'btn-outline-primary' : 'btn-primary'}`}
+              onClick={() => tagsSetActive(tag.tag)}
               key={index}>
-              {tag}
+              {tag.tag}
             </button>
           )}
         </div>
@@ -74,7 +86,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   categoriesSetActive: (value) => dispatch(categoriesSetActive(value)),
-  productSetSort: (value) => dispatch(productSetSort(value)),
+  tagsSetActive: (value) => dispatch(tagsSetActive(value)),
+  productSetSort: (value) => dispatch(productSetSort(value)), 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
