@@ -2,69 +2,56 @@ import axios from 'axios';
 import { jsonRequest } from '../functions';
 import { resMessageShow } from './message';
 import { modalLoginClose, modalRegClose } from './modal';
-import {
-  ACCOUNT_AUTH_REQUEST,
-  ACCOUNT_AUTH_SUCCESS,
-  ACCOUNT_AUTH_FAIL,
-
-  ACCOUNT_LOGIN_REQUEST,
-  ACCOUNT_LOGIN_SUCCESS,
-  ACCOUNT_LOGIN_FAIL,
-
-  ACCOUNT_REGISTRATION_REQUEST,
-  ACCOUNT_REGISTRATION_SUCCESS,
-  ACCOUNT_REGISTRATION_FAIL,
-
-  ACCOUNT_LOGOUT,
-} from '../constants/action-type';
+import * as actionType from '../constants/action-type';
+import * as apiURL from '../constants/api-url';
 
 export const authRequest = () => ({
-  type: ACCOUNT_AUTH_REQUEST,
+  type: actionType.ACCOUNT_AUTH_REQUEST,
 });
 
 export const authSuccess = (data) => ({
-  type: ACCOUNT_AUTH_SUCCESS,
+  type: actionType.ACCOUNT_AUTH_SUCCESS,
   payload: data,
 });
 
 export const authFail = () => ({
-  type: ACCOUNT_AUTH_FAIL,
+  type: actionType.ACCOUNT_AUTH_FAIL,
 });
 
 export const loginRequest = () => ({ 
-  type: ACCOUNT_LOGIN_REQUEST,
+  type: actionType.ACCOUNT_LOGIN_REQUEST,
 });
 
 export const loginSuccess = (data) => ({ 
-  type : ACCOUNT_LOGIN_SUCCESS, 
+  type: actionType.ACCOUNT_LOGIN_SUCCESS, 
   payload: data, 
 });
 
 export const loginFail = () => ({
-  type: ACCOUNT_LOGIN_FAIL,
+  type: actionType.ACCOUNT_LOGIN_FAIL,
 });
 
-export const regRequest = () => ({
-  type: ACCOUNT_REGISTRATION_REQUEST,
+export const registrationRequest = () => ({
+  type: actionType.ACCOUNT_REGISTRATION_REQUEST,
 })
 
-export const regSuccess = (data) => ({
-  type: ACCOUNT_REGISTRATION_SUCCESS,
+export const registrationSuccess = (data) => ({
+  type: actionType.ACCOUNT_REGISTRATION_SUCCESS,
   payload: data,
 });
 
-export const regFail = () => ({
-  type: ACCOUNT_REGISTRATION_FAIL,
+export const registrationFail = () => ({
+  type: actionType.ACCOUNT_REGISTRATION_FAIL,
 });
 
 export const logoutUser = () => ({
-  type: ACCOUNT_LOGOUT,
+  type: actionType.ACCOUNT_LOGOUT,
 });
 
 export const authUser = (token) => (dispatch) => {
   dispatch(authRequest());
   const { config } = jsonRequest({ headers: { token } });
-  axios.get('/api/account/auth', config)
+  axios.get(apiURL.ACCOUNT_AUTH, config)
     .then((res) => {
       dispatch(authSuccess(res.data));
     })
@@ -77,7 +64,7 @@ export const authUser = (token) => (dispatch) => {
 export const loginUser = ({ email, password }) => (dispatch) => {
   dispatch(loginRequest());
   const { config, body } = jsonRequest({ body: { email, password }});
-  axios.post('/api/account/login', body, config)
+  axios.post(apiURL.ACCOUNT_LOGIN, body, config)
     .then((res) => {
       dispatch(loginSuccess(res.data));
       dispatch(modalLoginClose());
@@ -89,15 +76,15 @@ export const loginUser = ({ email, password }) => (dispatch) => {
 };
 
 export const registrationUser = ({ email, password }) => (dispatch) => {
-  dispatch(regRequest());
+  dispatch(registrationRequest());
   const { config, body } = jsonRequest({ body: { email, password }});
-  axios.post('/api/account/registration', body, config)
+  axios.post(apiURL.ACCOUNT_REGISTRATION, body, config)
     .then((res) => {
-      dispatch(regSuccess(res.data));
+      dispatch(registrationSuccess(res.data));
       dispatch(modalRegClose());
     })
     .catch((error) => {
-      dispatch(regFail());
+      dispatch(registrationFail());
       resMessageShow(error.response.data)(dispatch);
     });
 };

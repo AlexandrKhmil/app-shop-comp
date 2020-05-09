@@ -1,6 +1,4 @@
-import {
-  MESSAGE_SHOW,
-} from '../constants/action-type';
+import * as actionType from '../constants/action-type';
 
 const initialState = {
   type: null,
@@ -10,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch(type) {
-    case MESSAGE_SHOW: {
+    case actionType.MESSAGE_SHOW: {
       return {
         ...state,
         ...payload,

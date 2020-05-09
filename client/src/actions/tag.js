@@ -1,33 +1,29 @@
 import axios from 'axios';
 import { resMessageShow } from './message';
-import {
-  TAG_LIST_REQUEST,
-  TAG_LIST_SUCCESS,
-  TAG_LIST_FAIL, 
-  TAG_SET_ACTIVE,
-} from '../constants/action-type';
+import * as actionType from '../constants/action-type';
+import * as apiURL from '../constants/api-url';
 
 export const tagListRequest = () => ({ 
-  type: TAG_LIST_REQUEST 
+  type: actionType.TAG_LIST_REQUEST 
 });
 
 export const tagListSuccess = (data) => ({
-  type: TAG_LIST_SUCCESS,
+  type: actionType.TAG_LIST_SUCCESS,
   payload: data,
 });
 
 export const tagListFail = () => ({
-  type: TAG_LIST_FAIL,
+  type: actionType.TAG_LIST_FAIL,
 });
 
 export const tagSetActive = (tag) => ({
-  type: TAG_SET_ACTIVE,
+  type: actionType.TAG_SET_ACTIVE,
   payload: tag,
 });
 
 export const getTagList = () => (dispatch) => {
   dispatch(tagListRequest());
-  axios.get('/api/product/tags')
+  axios.get(apiURL.TAG_LIST)
     .then((res) => {
       dispatch(tagListSuccess(res.data));
     })

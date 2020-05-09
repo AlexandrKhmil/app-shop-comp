@@ -1,8 +1,4 @@
-import {
-  CART_ADD_PRODUCT,
-  CART_REMOVE_PRODUCT,
-  CART_CLEAR_PRODUCT,
-} from '../constants/action-type';
+import * as actionType from '../constants/action-type';
 
 const initialState = {
   list: {}
@@ -10,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch(type) {
-    case CART_ADD_PRODUCT: {
+    case actionType.CART_ADD_PRODUCT: {
       return {
         ...state,
         list: {
@@ -24,7 +20,7 @@ export default (state = initialState, { type, payload }) => {
         }
       };
     }
-    case CART_REMOVE_PRODUCT: {
+    case actionType.CART_REMOVE_PRODUCT: {
       return {
         ...state,
         list: {
@@ -35,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
         }
       }
     }
-    case CART_CLEAR_PRODUCT: {
+    case actionType.CART_CLEAR_PRODUCT: {
       const listWithout = Object.entries(state.list)
         .filter((product) => product[1].id !== payload);
       return {

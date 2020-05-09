@@ -1,13 +1,4 @@
-import {
-  PRODUCT_LIST_REQUEST,
-  PRODUCT_LIST_SUCCESS,
-  PRODUCT_LIST_FAIL,
-
-  PRODUCT_PAGE_CHANGE,
-  PRODUCT_PAGE_END,
-
-  PRODUCT_SET_SORT,
-} from '../constants/action-type';
+import * as actionType from '../constants/action-type';
 import { DATE_DESC } from '../constants/sort-type';
 
 const initialState = {
@@ -21,14 +12,14 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch(type) {
-    case PRODUCT_LIST_REQUEST: {
+    case actionType.PRODUCT_LIST_REQUEST: {
       return {
         ...state,
         isLoading: true,
         isLoaded: false
       };
     }
-    case PRODUCT_LIST_SUCCESS: {
+    case actionType.PRODUCT_LIST_SUCCESS: {
       const list = Object.fromEntries(payload.map((product) => 
         [product.id, {...product }]
       ));
@@ -39,7 +30,7 @@ export default (state = initialState, { type, payload }) => {
         isLoaded: true,
       };
     }
-    case PRODUCT_LIST_FAIL: {
+    case actionType.PRODUCT_LIST_FAIL: {
       return {
         ...state,
         isLoading: false,
@@ -47,25 +38,26 @@ export default (state = initialState, { type, payload }) => {
       }
     }
 
-    case PRODUCT_PAGE_CHANGE: {
+    case actionType.PRODUCT_PAGE_CHANGE: {
       return {
         ...state,
         offset: state.offset + payload,
       };
     }
-    case PRODUCT_PAGE_END: {
+    case actionType.PRODUCT_PAGE_END: {
       return {
         ...state,
         didLoadedAll: true,
       }
     }
 
-    case PRODUCT_SET_SORT: {
+    case actionType.PRODUCT_SET_SORT: {
       return {
         ...state,
         sortType: payload,
       }
     }
+
     default: {
       return state;
     }
