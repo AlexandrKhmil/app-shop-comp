@@ -52,10 +52,15 @@ const Header = ({
 
   return (
     <header className="pt-4 pb-5">
-      <nav className="navbar navbar-expand navbar-dark bg-primary fixed-top">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
         <NavLink className="navbar-brand" to="/">Brand</NavLink>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
         <div className="collapse navbar-collapse" id="navbar">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav mr-auto align-items-center">
             <li className="nav-item">
               <NavLink className="nav-link" exact to="/">Home</NavLink>
             </li>

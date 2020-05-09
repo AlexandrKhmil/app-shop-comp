@@ -16,7 +16,7 @@ const Home = ({
   }) => {
   return (
     <main>
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-sm-5">
         <div className="row">
           <div className="col-12 col-lg-3 mb-3">
             <Sidebar /> 
