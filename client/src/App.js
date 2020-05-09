@@ -19,7 +19,7 @@ import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
 import { getCategoryList } from './actions/category';
 import { getTagList } from './actions/tag';
-import { getProductList } from './actions/product';
+import { productGetList } from './actions/product';
 import { 
   modalLoginClose, 
   modalRegClose, 
@@ -28,21 +28,21 @@ import {
 
 const App = (
   { 
-    token,
-    isAuth,
-    authUser,
+    accountToken,
+    accountIsAuth,
+    accountAuth,
 
-    categoriesIsLoading,
-    categoriesIsLoaded,
-    getCategoryList,
+    categoryIsLoading,
+    categoryIsLoaded,
+    categoryGetList,
 
-    tagsIsLoading,
-    tagsIsLoaded,
-    getTagList,
-
+    tagIsLoading,
+    tagIsLoaded,
+    tagGetList,
+    
     productIsLoading,
     productIsLoaded,
-    getProductList,
+    productGetList,
 
     modalLoginIsOpen, 
     modalLoginClose,
@@ -53,17 +53,17 @@ const App = (
   }
 ) => {
   useEffect(() => {
-    if(token && !isAuth) authUser(token);
-  }, [token, isAuth, authUser]);
+    if(accountToken && !accountIsAuth) accountAuth(accountToken);
+  }, [accountToken, accountIsAuth, accountAuth]);
   useEffect(() => {
-    if(!categoriesIsLoaded && !categoriesIsLoading) getCategoryList();
-  }, [categoriesIsLoading, categoriesIsLoaded, getCategoryList]);
+    if(!categoryIsLoading && !categoryIsLoaded) categoryGetList();
+  }, [categoryIsLoading, categoryIsLoaded, categoryGetList]);
   useEffect(() => {
-    if(!tagsIsLoaded && !tagsIsLoading) getTagList();
-  }, [tagsIsLoading, tagsIsLoaded, getTagList]);
+    if(!tagIsLoading && !tagIsLoaded) tagGetList();
+  }, [tagIsLoading, tagIsLoaded, tagGetList]);
   useEffect(() => {
-    if(!productIsLoaded && !productIsLoading) getProductList();
-  }, [productIsLoading, productIsLoaded, getProductList]);
+    if(!productIsLoading && !productIsLoaded) productGetList();
+  }, [productIsLoading, productIsLoaded, productGetList]);
 
   const alertOptions = {
     position: positions.TOP_CENTER,
@@ -113,24 +113,28 @@ const App = (
 };
 
 const mapStateToProps = (state) => ({
-  token: state.account.token,
-  isAuth: state.account.isAuth,
-  categoriesIsLoading: state.category.isLoading,
-  categoriesIsLoaded: state.category.isLoaded,
-  tagsIsLoading: state.tag.isLoading,
-  tagsIsLoaded: state.tag.isLoaded,
+  accountToken: state.account.token,
+  accountIsAuth: state.account.isAuth,
+
+  categoryIsLoading: state.category.isLoading,
+  categoryIsLoaded: state.category.isLoaded,
+
+  tagIsLoading: state.tag.isLoading,
+  tagIsLoaded: state.tag.isLoaded,
+
   productIsLoading: state.product.isLoading,
   productIsLoaded: state.product.isLoaded,
+
   modalLoginIsOpen: state.modal.login.isOpen,
   modalRegIsOpen: state.modal.registration.isOpen,
   modalCartIsOpen: state.modal.cart.isOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  authUser: (value) => authUser(value)(dispatch),
-  getCategoryList: () => getCategoryList()(dispatch),
-  getTagList: () => getTagList()(dispatch),
-  getProductList: (value) => getProductList(value)(dispatch),
+  accountAuth: (value) => authUser(value)(dispatch), 
+  categoryGetList: () => getCategoryList()(dispatch),
+  tagGetList: () => getTagList()(dispatch),
+  productGetList: (value) => productGetList(value)(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
   modalCartClose: () => dispatch(modalCartClose()),

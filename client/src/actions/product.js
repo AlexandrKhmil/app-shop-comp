@@ -31,7 +31,7 @@ export const productSetSort = (sortType) => ({
   payload: sortType,
 });
 
-export const getProductList = (
+export const productGetList = (
   { 
     limit = 9, 
     offset,

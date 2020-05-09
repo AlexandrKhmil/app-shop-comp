@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Sidebar from '../../containers/Sidebar';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
-import { getProductList } from '../../actions/product';
+import { productGetList } from '../../actions/product';
 import * as sortTypes from '../../constants/sort-type';
 import styles from './styles.module.css';
 
@@ -14,7 +14,7 @@ const Home = (
     isLoading,
     isLoaded,
     offset,
-    getProductList,
+    productGetList,
     didLoadedAll,
   }
 ) => {
@@ -42,7 +42,7 @@ const Home = (
                   <div className="card card-body border-0 h-100 d-flex justify-content-center align-items-center">
                     <button 
                       className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
-                      onClick={() => getProductList({ offset, category: activeCategory })}
+                      onClick={() => productGetList({ offset, category: activeCategory })}
                       disabled={isLoading}>
                       <img src={require('../../static/reload.svg')} alt="Reload" />
                     </button> 
@@ -111,7 +111,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getProductList: (value) => dispatch(getProductList(value)),
+  productGetList: (value) => dispatch(productGetList(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
