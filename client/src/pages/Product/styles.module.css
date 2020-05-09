@@ -2,3 +2,15 @@
   object-fit: contain;
   height: 250px;
 }
+
+.btn { 
+  height: 50px;
+  align-items: center;
+  font-size: 18px;
+}
+
+.btn img {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+}

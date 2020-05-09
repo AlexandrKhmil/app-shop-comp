@@ -55,8 +55,8 @@ const Header = ({
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
         <NavLink className="navbar-brand" to="/">Brand</NavLink>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">

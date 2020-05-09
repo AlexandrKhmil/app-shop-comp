@@ -56,3 +56,12 @@ export const dateFormat = (date) => {
   }
   return result;
 };
+
+export const ratingNormalization = (rating) => {
+  let normalizedRating = rating / 5 * 500
+  return Array(5).fill(0).map(() => {
+    let rating = normalizedRating >= 100 ? 100 : normalizedRating
+    normalizedRating = normalizedRating >= 100 ? normalizedRating - 100 : 0
+    return rating
+  })
+};

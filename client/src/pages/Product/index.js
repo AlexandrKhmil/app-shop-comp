@@ -3,10 +3,19 @@ import { connect } from 'react-redux';
 import Markdown from 'react-markdown';
 import { selectedGet } from '../../actions/selected';
 import InfoTable from '../../components/InfoTable';
-import { dateFormat } from '../../functions/index';
+import Rating from '../../components/Rating';
+import { dateFormat } from '../../functions';
+import { cartAddProduct } from '../../actions/cart';
 import styles from './styles.module.css';
 
-const Product = ({ link, isLoading, isLoaded, selectedGet, product }) => { 
+const Product = ({ 
+  link, 
+  isLoading, 
+  isLoaded, 
+  selectedGet, 
+  product, 
+  cartAddProduct 
+}) => { 
   useEffect(() => {  
     if ((!isLoading && !isLoaded) || ((product.link !== link) && !isLoading)) {
       selectedGet({ link });
@@ -29,7 +38,8 @@ const Product = ({ link, isLoading, isLoaded, selectedGet, product }) => {
         <div className="row">
           <div className="col-md-5 mb-3">
             <div className="card card-body border-primary ">
-              <img className={styles.img} src={product.img_url} alt="Product" />
+              <img className={`mb-3 ${styles.img}`} src={product.img_url} alt="Product" />
+              <Rating />
             </div> 
           </div>
 
@@ -37,6 +47,12 @@ const Product = ({ link, isLoading, isLoaded, selectedGet, product }) => {
             <h1 className="mb-3">{product.title}</h1>
             <div className="card card-body border-primary">
               <InfoTable data={tableData}/>
+              <button 
+                className={`btn btn-primary d-flex justify-content-center p-1 mt-auto ${styles.btn}`}
+                onClick={() => cartAddProduct(product.id)}>
+                Добавить в корзину
+                <img className="ml-2" src={require('../../static/shopping-cart.svg')} alt="Cart" />
+              </button>
             </div>
           </div>
           
@@ -60,6 +76,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   selectedGet: (value) => dispatch(selectedGet(value)),
+  cartAddProduct: (value) => dispatch(cartAddProduct(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
