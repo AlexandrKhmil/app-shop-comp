@@ -17,6 +17,7 @@ export const selectedFail = () => ({
 });
 
 export const selectedGet = ({ link }) => (dispatch) => {
+  console.log(1, link)
   dispatch(selectedRequest());
   axios.get(apiURL.PRODUCT_INFO(link))
     .then((res) => {

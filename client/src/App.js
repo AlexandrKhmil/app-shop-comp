@@ -9,8 +9,6 @@ import {
 import Alert from './containers/Alert';
 import AlertTemplate from './components/AlertTemplate';
 import Header from './containers/Header';
-import Home from './pages/Home';
-import Checkout from './pages/Checkout';
 import Modal from './containers/Modal';
 import Login from './components/Login';
 import Registration from './components/Registration';
@@ -25,6 +23,10 @@ import {
   modalRegClose, 
   modalCartClose 
 } from './actions/modal';
+
+import Home from './pages/Home';
+import Checkout from './pages/Checkout';
+import Product from './pages/Product';
 
 const App = ({ 
     accountToken,
@@ -104,6 +106,7 @@ const App = ({
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/checkout" component={Checkout} />
+          <Route path="/product/:link" component={Product} />
         </Switch>
       </Router>
     </AlertProvider>

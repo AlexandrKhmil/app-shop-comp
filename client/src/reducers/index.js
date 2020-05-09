@@ -6,6 +6,7 @@ import cart from './cart';
 import category from './category';
 import tag from './tag';
 import product from './product';
+import selected from './selected';
 
 export default combineReducers({
   message, 
@@ -15,4 +16,5 @@ export default combineReducers({
   category,
   tag,
   product,
+  selected,
 });

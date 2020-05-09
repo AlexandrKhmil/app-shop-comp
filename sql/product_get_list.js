@@ -21,7 +21,6 @@ module.exports = ({
       p.category, 
       p.link, 
       p.price, 
-      p.description, 
       p.create_time,
       AVG(rate.value) AS rate,
       COUNT(rate.*) AS vote_count,
