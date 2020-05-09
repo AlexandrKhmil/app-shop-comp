@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { categoriesSetActive } from '../../actions/categories';
-import { tagsSetActive } from '../../actions/tags'; 
+import { categorySetActive } from '../../actions/category';
+import { tagSetActive } from '../../actions/tag'; 
 import { productSetSort } from '../../actions/product';
-import { sortTypes } from '../../constants/sorts';
+import * as sortTypes from '../../constants/sort-type';
 
 const Sidebar = (
   { 
     categoriesList, 
     active, 
-    categoriesSetActive, 
+    categorySetActive, 
     tagList, 
-    tagsSetActive,
+    tagSetActive,
     productSetSort, 
     activeSortType, 
   }
@@ -52,7 +52,7 @@ const Sidebar = (
           {categoriesList.map((category, index) =>
             <button 
               className={`btn mb-2 ${active !== category ? 'btn-outline-primary' : 'btn-primary'}`}
-              onClick={() => categoriesSetActive(category)}
+              onClick={() => categorySetActive(category)}
               key={index}>
               {category}
             </button>
@@ -66,7 +66,7 @@ const Sidebar = (
           {tagList.map((tag, index) =>
             <button 
               className={`btn mb-2 ${!tag.isActive ? 'btn-outline-primary' : 'btn-primary'}`}
-              onClick={() => tagsSetActive(tag.tag)}
+              onClick={() => tagSetActive(tag.tag)}
               key={index}>
               {tag.tag}
             </button>
@@ -78,15 +78,15 @@ const Sidebar = (
 };
 
 const mapStateToProps = (state) => ({
-  categoriesList: Object.values(state.categories.list),
-  tagList: Object.values(state.tags.list),
-  active: state.categories.active,
+  categoriesList: Object.values(state.category.list),
+  tagList: Object.values(state.tag.list),
+  active: state.category.active,
   activeSortType: state.product.sortType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  categoriesSetActive: (value) => dispatch(categoriesSetActive(value)),
-  tagsSetActive: (value) => dispatch(tagsSetActive(value)),
+  categorySetActive: (value) => dispatch(categorySetActive(value)),
+  tagSetActive: (value) => dispatch(tagSetActive(value)),
   productSetSort: (value) => dispatch(productSetSort(value)), 
 });
 

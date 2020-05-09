@@ -17,8 +17,8 @@ import Registration from './components/Registration';
 import CartList from './components/CartList';
 import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
-import { getCategoriesList } from './actions/categories';
-import { getTagsList } from './actions/tags';
+import { getCategoryList } from './actions/category';
+import { getTagList } from './actions/tag';
 import { getProductList } from './actions/product';
 import { 
   modalLoginClose, 
@@ -34,11 +34,11 @@ const App = (
 
     categoriesIsLoading,
     categoriesIsLoaded,
-    getCategoriesList,
+    getCategoryList,
 
     tagsIsLoading,
     tagsIsLoaded,
-    getTagsList,
+    getTagList,
 
     productIsLoading,
     productIsLoaded,
@@ -56,11 +56,11 @@ const App = (
     if(token && !isAuth) authUser(token);
   }, [token, isAuth, authUser]);
   useEffect(() => {
-    if(!categoriesIsLoaded && !categoriesIsLoading) getCategoriesList();
-  }, [categoriesIsLoading, categoriesIsLoaded, getCategoriesList]);
+    if(!categoriesIsLoaded && !categoriesIsLoading) getCategoryList();
+  }, [categoriesIsLoading, categoriesIsLoaded, getCategoryList]);
   useEffect(() => {
-    if(!tagsIsLoaded && !tagsIsLoading) getTagsList();
-  }, [tagsIsLoading, tagsIsLoaded, getTagsList]);
+    if(!tagsIsLoaded && !tagsIsLoading) getTagList();
+  }, [tagsIsLoading, tagsIsLoaded, getTagList]);
   useEffect(() => {
     if(!productIsLoaded && !productIsLoading) getProductList();
   }, [productIsLoading, productIsLoaded, getProductList]);
@@ -115,10 +115,10 @@ const App = (
 const mapStateToProps = (state) => ({
   token: state.account.token,
   isAuth: state.account.isAuth,
-  categoriesIsLoading: state.categories.isLoading,
-  categoriesIsLoaded: state.categories.isLoaded,
-  tagsIsLoading: state.tags.isLoading,
-  tagsIsLoaded: state.tags.isLoaded,
+  categoriesIsLoading: state.category.isLoading,
+  categoriesIsLoaded: state.category.isLoaded,
+  tagsIsLoading: state.tag.isLoading,
+  tagsIsLoaded: state.tag.isLoaded,
   productIsLoading: state.product.isLoading,
   productIsLoaded: state.product.isLoaded,
   modalLoginIsOpen: state.modal.login.isOpen,
@@ -128,8 +128,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   authUser: (value) => authUser(value)(dispatch),
-  getCategoriesList: () => getCategoriesList()(dispatch),
-  getTagsList: () => getTagsList()(dispatch),
+  getCategoryList: () => getCategoryList()(dispatch),
+  getTagList: () => getTagList()(dispatch),
   getProductList: (value) => getProductList(value)(dispatch),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),

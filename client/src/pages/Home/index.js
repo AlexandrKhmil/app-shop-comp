@@ -4,7 +4,7 @@ import Sidebar from '../../containers/Sidebar';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
 import { getProductList } from '../../actions/product';
-import { sortTypes } from '../../constants/sorts';
+import * as sortTypes from '../../constants/sort-type';
 import styles from './styles.module.css';
 
 const Home = (
@@ -63,13 +63,13 @@ const Home = (
 const mapStateToProps = (state) => {  
   let productList = Object.values(state.product.list)
 
-  const activeCategory = state.categories.active; 
+  const activeCategory = state.category.active; 
   if (activeCategory) {
     productList = productList.filter((product) => 
       product.category === activeCategory); 
   }
 
-  const activeTags = Object.values(state.tags.list)
+  const activeTags = Object.values(state.tag.list)
     .filter((tag) => tag.isActive)
     .map((tag) => tag.tag);
   if (activeTags.length > 0) {

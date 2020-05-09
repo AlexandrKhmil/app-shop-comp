@@ -7,7 +7,7 @@ import {
 
   MODAL_CART_OPEN,
   MODAL_CART_CLOSE,
-} from '../constants/types';
+} from '../constants/action-type';
 
 const initialState = {
   login: { isOpen: false, },

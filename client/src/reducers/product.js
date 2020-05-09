@@ -7,8 +7,8 @@ import {
   PRODUCT_PAGE_END,
 
   PRODUCT_SET_SORT,
-} from '../constants/types';
-import { sortTypes } from '../constants/sorts';
+} from '../constants/action-type';
+import { DATE_DESC } from '../constants/sort-type';
 
 const initialState = {
   list: {},
@@ -16,7 +16,7 @@ const initialState = {
   didLoadedAll: false,
   isLoading: false,
   isLoaded: false,
-  sortType: sortTypes.DATE_DESC,
+  sortType: DATE_DESC,
 };
 
 export default (state = initialState, { type, payload }) => {

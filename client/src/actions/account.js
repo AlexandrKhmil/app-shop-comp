@@ -16,50 +16,50 @@ import {
   ACCOUNT_REGISTRATION_FAIL,
 
   ACCOUNT_LOGOUT,
-} from '../constants/types';
+} from '../constants/action-type';
 
-const authRequest = () => ({
+export const authRequest = () => ({
   type: ACCOUNT_AUTH_REQUEST,
 });
 
-const authSuccess = (data) => ({
+export const authSuccess = (data) => ({
   type: ACCOUNT_AUTH_SUCCESS,
   payload: data,
 });
 
-const authFail = () => ({
+export const authFail = () => ({
   type: ACCOUNT_AUTH_FAIL,
 });
 
-const loginRequest = () => ({ 
+export const loginRequest = () => ({ 
   type: ACCOUNT_LOGIN_REQUEST,
 });
 
-const loginSuccess = (data) => ({ 
+export const loginSuccess = (data) => ({ 
   type : ACCOUNT_LOGIN_SUCCESS, 
   payload: data, 
 });
 
-const loginFail = () => ({
+export const loginFail = () => ({
   type: ACCOUNT_LOGIN_FAIL,
 });
 
-const regRequest = () => ({
+export const regRequest = () => ({
   type: ACCOUNT_REGISTRATION_REQUEST,
 })
 
-const regSuccess = (data) => ({
+export const regSuccess = (data) => ({
   type: ACCOUNT_REGISTRATION_SUCCESS,
   payload: data,
-})
+});
 
-const regFail = () => ({
+export const regFail = () => ({
   type: ACCOUNT_REGISTRATION_FAIL,
-})
+});
 
 export const logoutUser = () => ({
   type: ACCOUNT_LOGOUT,
-})
+});
 
 export const authUser = (token) => (dispatch) => {
   dispatch(authRequest());
@@ -72,7 +72,7 @@ export const authUser = (token) => (dispatch) => {
       dispatch(authFail());
       resMessageShow(error.response.data)(dispatch);
     });
-}
+};
 
 export const loginUser = ({ email, password }) => (dispatch) => {
   dispatch(loginRequest());

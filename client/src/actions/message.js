@@ -1,7 +1,7 @@
 import {
   MESSAGE_SHOW,
-} from '../constants/types';
-import msgTypes from '../constants/messages';
+} from '../constants/action-type';
+import { MESSAGE_ERROR } from '../constants/message-type';
 
 export const messageShow = ({ type, title, text }) => ({
   type: MESSAGE_SHOW,
@@ -11,17 +11,17 @@ export const messageShow = ({ type, title, text }) => ({
 export const resMessageShow = ({ msg, errorList }) => (dispatch) => {
   if (msg) {
     dispatch(messageShow({ 
-      type: msgTypes.ERROR, 
+      type: MESSAGE_ERROR, 
       title: 'Ошибка!', 
-      text: msg 
+      text: msg, 
     }));
   }
   if (errorList) {
     errorList.forEach((error) => {
       dispatch(messageShow({ 
-        type: msgTypes.ERROR, 
+        type: MESSAGE_ERROR, 
         title: error.param, 
-        text: error.msg 
+        text: error.msg, 
       }));
     });
   }

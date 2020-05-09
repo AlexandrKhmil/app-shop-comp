@@ -1,10 +1,9 @@
 import {
-  CATEGORIES_LIST_REQUEST,
-  CATEGORIES_LIST_SUCCESS,
-  CATEGORIES_LIST_FAIL,
-
-  CATEGORIES_SET_ACTIVE,
-} from '../constants/types';
+  TAG_LIST_REQUEST,
+  TAG_LIST_SUCCESS,
+  TAG_LIST_FAIL, 
+  TAG_SET_ACTIVE,
+} from '../constants/action-type';
 
 const initialState = {
   list: {},
@@ -15,36 +14,38 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch(type) {
-    case CATEGORIES_LIST_REQUEST: {
+    case TAG_LIST_REQUEST: {
       return {
         ...state,
         isLoading: true,
       };
     }
-    case CATEGORIES_LIST_SUCCESS: { 
+    case TAG_LIST_SUCCESS: { 
       return {
         ...state,
-        list: { ...payload },
+        list: { ...payload.map((tag) => ({ tag, isActive: false })) },
         isLoading: false,
         isLoaded: true,
       };
     }
-    case CATEGORIES_LIST_FAIL: {
+    case TAG_LIST_FAIL: {
       return {
         ...state,
         isLoading: false,
         isLoaded: true,
       };
     }
-
-    case CATEGORIES_SET_ACTIVE: {
+    case TAG_SET_ACTIVE: {
+      const list = Object.values(state.list).map((tag) => {
+        return tag === payload ? { ...tag, isActive: !tag.isActive } : tag;
+      }); 
       return {
         ...state,
-        active: state.active !== payload ? payload : null,
-      }
+        list: { ...list },
+      };
     }
     default: {
       return state;
     }
   }
-}
+};

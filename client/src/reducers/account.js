@@ -12,7 +12,7 @@ import {
   ACCOUNT_REGISTRATION_FAIL,
 
   ACCOUNT_LOGOUT,
-} from '../constants/types';
+} from '../constants/action-type';
 
 const initialState = {
   email: null,

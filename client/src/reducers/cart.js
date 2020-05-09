@@ -2,7 +2,7 @@ import {
   CART_ADD_PRODUCT,
   CART_REMOVE_PRODUCT,
   CART_CLEAR_PRODUCT,
-} from '../constants/types';
+} from '../constants/action-type';
 
 const initialState = {
   list: {}

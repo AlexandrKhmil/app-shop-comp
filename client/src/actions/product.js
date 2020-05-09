@@ -10,46 +10,43 @@ import {
   PRODUCT_PAGE_END,
 
   PRODUCT_SET_SORT,
-} from '../constants/types';
+} from '../constants/action-type';
 
-const productListRequest = () => ({
+export const productListRequest = () => ({
   type: PRODUCT_LIST_REQUEST,
 });
 
-const productListSuccess = (data) => ({
+export const productListSuccess = (data) => ({
   type: PRODUCT_LIST_SUCCESS,
   payload: data,
 });
 
-const productListFail = () => ({
+export const productListFail = () => ({
   type: PRODUCT_LIST_FAIL,
 });
 
-const productPageChange = (offset) => ({
+export const productPageChange = (offset) => ({
   type: PRODUCT_PAGE_CHANGE,
   payload: offset,
 });
 
-const productPageEnd = () => ({
+export const productPageEnd = () => ({
   type: PRODUCT_PAGE_END,
 });
 
 export const productSetSort = (sortType) => ({
   type: PRODUCT_SET_SORT,
   payload: sortType,
-})
+});
 
 export const getProductList = (
   { 
     limit = 9, 
     offset,
-    // category,  
   } = { limit: 9, offset: 0}
 ) => (dispatch) => {
   dispatch(productListRequest());
-  const headers = { limit, offset };
-  // if (category) headers['category'] = category;
-  const { config } = jsonRequest({ headers });
+  const { config } = jsonRequest({ headers: { limit, offset } });
   axios.get('api/product/list', config)
     .then((res) => {
       dispatch(productListSuccess(res.data));

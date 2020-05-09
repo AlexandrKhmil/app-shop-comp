@@ -1,6 +1,6 @@
 import {
   MESSAGE_SHOW,
-} from '../constants/types';
+} from '../constants/action-type';
 
 const initialState = {
   type: null,
