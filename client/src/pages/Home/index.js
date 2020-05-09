@@ -4,11 +4,10 @@ import Sidebar from '../../containers/Sidebar';
 import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
 import { productGetList } from '../../actions/product';
-import * as sortTypes from '../../constants/sort-type';
+import { categoryFilter, tagFilter, sortProduct } from '../../functions';
 import styles from './styles.module.css';
 
-const Home = (
-  {
+const Home = ({
     productList,
     activeCategory, 
     isLoading,
@@ -16,8 +15,7 @@ const Home = (
     offset,
     productGetList,
     didLoadedAll,
-  }
-) => {
+  }) => {
   return (
     <main>
       <div className="container-fluid mt-5">
@@ -42,7 +40,7 @@ const Home = (
                   <div className="card card-body border-0 h-100 d-flex justify-content-center align-items-center">
                     <button 
                       className={`btn bg-white border-primary rounded-circle d-flex justify-content-center align-items-center ${styles.reload}`}
-                      onClick={() => productGetList({ offset, category: activeCategory })}
+                      onClick={() => productGetList({ offset })}
                       disabled={isLoading}>
                       <img src={require('../../static/reload.svg')} alt="Reload" />
                     </button> 
@@ -63,46 +61,23 @@ const Home = (
 const mapStateToProps = (state) => {  
   let productList = Object.values(state.product.list)
 
-  const activeCategory = state.category.active; 
-  if (activeCategory) {
-    productList = productList.filter((product) => 
-      product.category === activeCategory); 
-  }
+  productList = categoryFilter({
+    category: state.category.active,
+    list: productList,
+  })
 
-  const activeTags = Object.values(state.tag.list)
-    .filter((tag) => tag.isActive)
-    .map((tag) => tag.tag);
-  if (activeTags.length > 0) {
-    productList = productList.filter((product) => { 
-      return product.tag_list.length > 0 
-        && product.tag_list.some((tag) => activeTags.indexOf(tag) >= 0);
-    });
-  }
+  productList = tagFilter({
+    tagList: state.tag.list,
+    productList: productList,
+  });
 
-  const sortType = state.product.sortType;
-  switch (sortType) {
-    case sortTypes.PRICE_ASC: {
-      productList = productList.sort((a, b) => a.price - b.price);
-      break;
-    }
-    case sortTypes.PRICE_DESC: {
-      productList = productList.sort((a, b) => b.price - a.price);
-      break;
-    }
-    case sortTypes.DATE_ASC: {
-      productList = productList.sort((a, b) => a.create_time - b.create_time);
-      break;
-    }
-    case sortTypes.DATE_DESC: {
-      productList = productList.sort((a, b) => b.create_time - a.create_time);
-      break;
-    }
-    default: break;
-  }
+  productList = sortProduct({ 
+    type: state.product.sortType, 
+    list: productList,
+  });
 
   return {
     productList,
-    activeCategory,
     isLoading: state.product.isLoading,
     isLoaded: state.product.isLoaded,
     offset: state.product.offset,

@@ -8,17 +8,14 @@ import {
 } from '../../actions/modal';
 import { logoutUser } from '../../actions/account';
 
-const Header = (
-  { 
+const Header = ({ 
     isAuth,
     email,
     logoutUser,
     modalLoginOpen,
     modalRegOpen,
     modalCartOpen,
-  }
-) => {
-
+  }) => {
   const unauthLinks = (
     <>
       <li className="nav-item">

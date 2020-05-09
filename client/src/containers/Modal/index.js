@@ -2,8 +2,7 @@ import React, { createRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styles from './styles.module.css';
 
-const Modal = (
-  { 
+const Modal = ({ 
     isOpen, 
     title, 
     children, 
@@ -12,8 +11,7 @@ const Modal = (
     classNameContent = '',
     classNameBody = '', 
     Footer,
-  }
-) => {
+  }) => {
   const ref = createRef();
   const backdropClose = (e) => e.target === ref.current && close();
   return (

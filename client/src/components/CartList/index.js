@@ -44,11 +44,12 @@ const CartList = ({ list, cartClearProducrt }) => {
 
 const mapStateToProps = (state) => {
   const products = Object.values(state.product.list);
-  const list = Object.values(state.cart.list)
-    .map((item) => ({ 
-      ...products.find((product) => product.id === item.id), 
-      quantity: item.quantity, 
-    }));
+  const list = Object.values(state.cart.list).map((cartItem) => {
+    return {
+      ...products.find((product) => product.id === cartItem.id),
+      quantity: cartItem.quantity, 
+    };
+  });
   return {
     list, 
   };

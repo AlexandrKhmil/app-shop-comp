@@ -17,8 +17,8 @@ import Registration from './components/Registration';
 import CartList from './components/CartList';
 import CartFooter from './components/CartFooter';
 import { authUser } from './actions/account';
-import { getCategoryList } from './actions/category';
-import { getTagList } from './actions/tag';
+import { categoryGetList } from './actions/category';
+import { tagGetList } from './actions/tag';
 import { productGetList } from './actions/product';
 import { 
   modalLoginClose, 
@@ -26,8 +26,7 @@ import {
   modalCartClose 
 } from './actions/modal';
 
-const App = (
-  { 
+const App = ({ 
     accountToken,
     accountIsAuth,
     accountAuth,
@@ -50,8 +49,7 @@ const App = (
     modalRegClose,
     modalCartIsOpen,
     modalCartClose,
-  }
-) => {
+  }) => {
   useEffect(() => {
     if(accountToken && !accountIsAuth) accountAuth(accountToken);
   }, [accountToken, accountIsAuth, accountAuth]);
@@ -131,10 +129,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  accountAuth: (value) => authUser(value)(dispatch), 
-  categoryGetList: () => getCategoryList()(dispatch),
-  tagGetList: () => getTagList()(dispatch),
-  productGetList: (value) => productGetList(value)(dispatch),
+  accountAuth: (value) => dispatch(authUser(value)), 
+  categoryGetList: () => dispatch(categoryGetList()),
+  tagGetList: () => dispatch(tagGetList()),
+  productGetList: (value) => dispatch(productGetList(value)),
   modalLoginClose: () => dispatch(modalLoginClose()),
   modalRegClose: () => dispatch(modalRegClose()),
   modalCartClose: () => dispatch(modalCartClose()),

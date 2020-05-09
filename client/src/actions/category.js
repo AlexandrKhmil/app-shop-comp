@@ -21,7 +21,7 @@ export const categorySetActive = (category) => ({
   payload: category,
 });
 
-export const getCategoryList = () => (dispatch) => {
+export const categoryGetList = () => (dispatch) => {
   dispatch(categoryListRequest());
   axios.get(apiURL.CATEGORY_LIST)
     .then((res) => {

@@ -4,8 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { cartAddProduct } from '../../actions/cart'
 import styles from './styles.module.css';
 
-const ProductCart = (
-  { 
+const ProductCart = ({ 
     id,
     title, 
     img_url, 
@@ -17,8 +16,7 @@ const ProductCart = (
     review_count, 
     tag_list,
     cartAddProduct,
-  }
-) => (
+  }) => (
   <div className="card card-body h-100"> 
     <div className="mb-2" style={{ minHeight: '24px' }}>
       {tag_list.map((tag, index) => 

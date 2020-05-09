@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/account';
+import { messageShow } from '../../actions/message';
+import * as msgType from '../../constants/message-type';
 
 const Login = ({ isLoading, loginUser }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const allFilled = Boolean(email && password);
   const onSubmit = (e) => {
     e.preventDefault();
+    if (!allFilled) {
+      return messageShow({ type: msgType.MESSAGE_ERROR, text: 'Заполните все поля!' });
+    }
     loginUser({ email, password });
   }
 
@@ -57,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (value) => loginUser(value)(dispatch),
+  loginUser: (value) => dispatch(loginUser(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

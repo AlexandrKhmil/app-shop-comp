@@ -71,7 +71,7 @@ export const loginUser = ({ email, password }) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(loginFail());
-      resMessageShow(error.ёresponse.data)(dispatch);
+      resMessageShow(error.response.data)(dispatch);
     });
 };
 

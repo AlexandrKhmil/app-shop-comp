@@ -21,7 +21,7 @@ export const tagSetActive = (tag) => ({
   payload: tag,
 });
 
-export const getTagList = () => (dispatch) => {
+export const tagGetList = () => (dispatch) => {
   dispatch(tagListRequest());
   axios.get(apiURL.TAG_LIST)
     .then((res) => {

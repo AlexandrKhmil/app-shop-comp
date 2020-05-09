@@ -5,8 +5,7 @@ import { tagSetActive } from '../../actions/tag';
 import { productSetSort } from '../../actions/product';
 import * as sortTypes from '../../constants/sort-type';
 
-const Sidebar = (
-  { 
+const Sidebar = ({ 
     categoriesList, 
     active, 
     categorySetActive, 
@@ -14,8 +13,7 @@ const Sidebar = (
     tagSetActive,
     productSetSort, 
     activeSortType, 
-  }
-) => {
+  }) => {
   return (
     <aside>
       <div className="card card-body border-primary mb-3">
