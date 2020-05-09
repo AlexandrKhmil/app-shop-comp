@@ -47,3 +47,12 @@ export const sortProduct = ({ type, list }) => {
     }
   }
 }; 
+
+export const dateFormat = (date) => {
+  let result = '';
+  if (date) {
+    const arr = date.split('T')[0].split('-');
+    result = `${arr[2]}-${arr[1]}-${arr[0]}`;
+  }
+  return result;
+};

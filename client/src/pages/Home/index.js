@@ -8,10 +8,8 @@ import { categoryFilter, tagFilter, sortProduct } from '../../functions';
 import styles from './styles.module.css';
 
 const Home = ({
-    productList,
-    activeCategory, 
+    productList, 
     isLoading,
-    isLoaded,
     offset,
     productGetList,
     didLoadedAll,
