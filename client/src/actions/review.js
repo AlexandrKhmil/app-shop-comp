@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { jsonRequest } from '../functions';
-import { resMessageShow } from './message';
+import { messageShow, resMessageShow } from './message';
 import * as actionType from '../constants/action-type';
 import * as apiURL from '../constants/api-url';
+import * as msgType from '../constants/message-type';
 
 export const reviewListRequest = () => ({
   type: actionType.REVIEW_LIST_REQUEST,
@@ -52,6 +53,11 @@ export const reviewAdd = ({ token, link, title, text }) => (dispatch) => {
   axios.post(apiURL.REVIEW_ADD(link), body, config)
     .then((res) => {
       dispatch(reviewAddSuccess(res.data));
+      dispatch(messageShow({
+        type: msgType.MESSAGE_SUCCESS,
+        title: 'Успех!',
+        text: 'Ваш отзыв оставлен!',
+      }));
     })
     .then(() => {
       reviewGetList({ link })(dispatch);

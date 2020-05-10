@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { jsonRequest } from '../functions';
-import { resMessageShow } from './message';
+import { messageShow, resMessageShow } from './message';
 import * as actionType from '../constants/action-type';
 import * as apiURL from '../constants/api-url';
+import * as msgType from '../constants/message-type';
 
 export const rateGetRequest = () => ({
   type: actionType.RATE_GET_REQUEST,
@@ -51,6 +52,13 @@ export const rateAdd = ({ token, link, value }) => (dispatch) => {
   axios.post(apiURL.RATE_ADD(link), body, config)
     .then(() => {
       dispatch(rateAddSuccess());
+      dispatch(messageShow({
+        type: msgType.MESSAGE_SUCCESS,
+        title: 'Успех!',
+        text: 'Ваша оценка учтена!',
+      }));
+    })
+    .then(() => {
       dispatch(rateGet({link}));
     })
     .catch((err) => {
