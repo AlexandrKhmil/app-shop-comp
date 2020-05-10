@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.80c26998.chunk.css",
+    "main.js": "/static/js/main.b49f92a8.chunk.js",
+    "main.js.map": "/static/js/main.b49f92a8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.98a2b520.js",
+    "runtime-main.js.map": "/static/js/runtime-main.98a2b520.js.map",
+    "static/js/2.1696ad2a.chunk.js": "/static/js/2.1696ad2a.chunk.js",
+    "static/js/2.1696ad2a.chunk.js.map": "/static/js/2.1696ad2a.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.f7ae8930d327ff84051348bbb3eff75a.js": "/precache-manifest.f7ae8930d327ff84051348bbb3eff75a.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.80c26998.chunk.css.map": "/static/css/main.80c26998.chunk.css.map",
+    "static/js/2.1696ad2a.chunk.js.LICENSE.txt": "/static/js/2.1696ad2a.chunk.js.LICENSE.txt",
+    "static/media/reload.svg": "/static/media/reload.d694bd07.svg",
+    "static/media/shopping-cart.svg": "/static/media/shopping-cart.22e1fa41.svg",
+    "static/media/star.svg": "/static/media/star.bbb7ece8.svg",
+    "static/media/starGray.svg": "/static/media/starGray.af746962.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.98a2b520.js",
+    "static/js/2.1696ad2a.chunk.js",
+    "static/css/main.80c26998.chunk.css",
+    "static/js/main.b49f92a8.chunk.js"
+  ]
+}
