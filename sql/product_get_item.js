@@ -9,7 +9,7 @@ module.exports = `
     p.description,
     p.create_time,
     AVG(value) AS rate,
-    COUNT(rate.*) AS votes,
+    (SELECT COUNT(1) FROM rate WHERE product_id = p.id) AS votes,
     COUNT(rev.*) AS review_count,
     array(SELECT tag
           FROM tag
@@ -29,7 +29,7 @@ module.exports = `
            WHERE rev.product_id = p.id
            GROUP BY rev.id, a.email) AS t) as review_list
   FROM product AS p
-    LEFT JOIN rate ON rate.product_id = p.id
+    LEFT JOIN rate AS r ON r.product_id = p.id
     LEFT JOIN review AS rev ON rev.product_id = p.id
   WHERE status = 'default'
     AND p.link = $1

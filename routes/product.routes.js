@@ -91,6 +91,28 @@ router.get(
   }
 );
 
+// GET 'api/product/{link}/rate/value
+router.get(
+  '/:link/rate/value',
+  async (req, res) => {
+    try {
+      const { link } = req.params;
+      const query = require('../sql/rate_get');
+
+      const result = await db.one(query, link)
+        .then((data) => data)
+        .catch((error) => ({ error }));
+      if (result.error) {
+        return res.status(500).json({ msg: 'Error', error: result.error });
+      }
+
+      return res.status(200).json(result);
+    } catch(error) {
+      return res.status(500).json({ msg: 'Error' })
+    }
+  }
+)
+
 // POST 'api/product/{link}/rate'
 router.post(
   '/:link/rate',
@@ -130,6 +152,29 @@ router.delete(
     }
   }
 );
+
+// GET 'api/product/{link}/review/list'
+router.get(
+  '/:link/review/list',
+  async (req, res) => {
+    try {
+      const { link } = req.params;
+      const query = require('../sql/review_get_list');
+      
+      const result = await db.any(query, link)
+        .then((data) => data)
+        .catch((error) => ({ error }));
+      if (result.error) {
+        return res.status(500).json({ msg: 'Error', error: result.error });
+      }
+  
+      return res.status(200).json(result);
+    } catch(error) {
+      console.log(error)
+      return res.status(500).json({ msg: 'Error' });
+    }
+  }
+)
 
 // POST 'api/product/{link}/review'
 router.post(
