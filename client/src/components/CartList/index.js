@@ -5,6 +5,14 @@ import { cartClearProducrt } from '../../actions/cart';
 import styles from './styles.module.css';
 
 const CartList = ({ list, cartClearProducrt }) => {
+  if (list.length === 0) {
+    return (
+      <div className={styles.cartBody}>
+        Ваша корзина пуста
+      </div>
+    );
+  }
+
   return (
     <div className={styles.cartBody}>
       {list.map((product) => 
@@ -50,9 +58,7 @@ const mapStateToProps = (state) => {
       quantity: cartItem.quantity, 
     };
   });
-  return {
-    list, 
-  };
+  return { list, };
 };
 
 const mapDispatchToProps = (dispatch) => ({

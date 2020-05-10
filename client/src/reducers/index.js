@@ -7,6 +7,7 @@ import category from './category';
 import tag from './tag';
 import product from './product';
 import selected from './selected';
+import review from './review';
 
 export default combineReducers({
   message, 
@@ -17,4 +18,5 @@ export default combineReducers({
   tag,
   product,
   selected,
+  review,
 });

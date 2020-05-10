@@ -16,6 +16,7 @@ const Product = ({
   isLoaded, 
   selectedGet, 
   product, 
+  tableData,
   cartAddProduct 
 }) => { 
   useEffect(() => {  
@@ -23,16 +24,6 @@ const Product = ({
       selectedGet({ link });
     } 
   }, [product.link, link, isLoading, isLoaded, selectedGet]);
-
-  let tableData = {
-    "Категория": product.category,
-    "Цена": `${product.price} ₴`,
-    "Добавлен": dateFormat(product.create_time),
-  };
-
-  if (product.tag_list && product.tag_list.length > 0) {
-    tableData['Тэги'] = product.tag_list.join(', ');
-  }
 
   return (
     <main>
@@ -83,12 +74,24 @@ const Product = ({
   );
 };
 
-const mapStateToProps = (state, props) => ({ 
-  link: props.match.params.link, 
-  isLoading: state.selected.isLoading,
-  isLoaded: state.selected.isLoaded,
-  product: state.selected.data,
-});
+const mapStateToProps = (state, props) => {
+  const product = state.selected.data;
+  let tableData = {
+    "Категория": product.category,
+    "Цена": `${product.price} ₴`,
+    "Добавлен": dateFormat(product.create_time),
+  };
+  if (product.tag_list && product.tag_list.length > 0) {
+    tableData['Тэги'] = product.tag_list.join(', ');
+  }
+  return {
+    product,
+    tableData,
+    link: props.match.params.link, 
+    isLoading: state.selected.isLoading,
+    isLoaded: state.selected.isLoaded,
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   selectedGet: (value) => dispatch(selectedGet(value)),

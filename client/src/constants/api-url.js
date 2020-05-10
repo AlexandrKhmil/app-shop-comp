@@ -8,4 +8,5 @@ export const PRODUCT_LIST = '/api/product/list';
 
 export const PRODUCT_INFO = (link) => `/api/product/${link}/info`;
 
+export const REVIEW_GET = (link) => `/api/product/${link}/review/list`;
 export const REVIEW_ADD = (link) => `/api/product/${link}/review`;

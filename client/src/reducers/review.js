@@ -1,47 +1,35 @@
 import * as actionType from '../constants/action-type';
 
 const initialState = {
-  data: {},
   isLoading: false,
   isLoaded: false,
 };
 
 export default (state = initialState, { type, payload }) => {
-  switch (type) {
-    case actionType.SELECTED_REQUEST: {
+  switch(type) {
+    case actionType.REVIEW_ADD_REQUEST: {
       return {
         ...state,
-        data: {},
         isLoading: true,
         isLoaded: false,
-      };
+      }
     }
-    case actionType.SELECTED_SUCCESS: {
+    case actionType.REVIEW_ADD_SUCCESS: {
       return {
         ...state,
-        data: payload,
         isLoading: false,
         isLoaded: true,
-      };
+      }
     }
-    case actionType.SELECTED_FAIL: {
+    case actionType.REVIEW_ADD_FAIL: {
       return {
         ...state,
-        data: {},
         isLoading: false,
         isLoaded: true,
-      };
-    }
-    case actionType.REVIEW_LIST_SUCCESS: {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-        }
       }
     }
     default: {
       return state;
     }
   }
-};
+}

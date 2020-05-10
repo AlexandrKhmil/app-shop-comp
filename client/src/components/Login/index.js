@@ -5,8 +5,8 @@ import { messageShow } from '../../actions/message';
 import * as msgType from '../../constants/message-type';
 
 const Login = ({ isLoading, loginUser }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const allFilled = Boolean(email && password);
   const onSubmit = (e) => {
     e.preventDefault();
