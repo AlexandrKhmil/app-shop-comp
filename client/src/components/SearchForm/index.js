@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 const SearchForm = ({ className }) => {
-  const [name, setName] = useState();
+  const [name, setName] = useState('');
   const onSubmit = (e) => {
     e.preventDefault();
   };
@@ -24,8 +24,8 @@ const SearchForm = ({ className }) => {
         Search
       </button>
     </form>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   

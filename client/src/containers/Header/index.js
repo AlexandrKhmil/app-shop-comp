@@ -15,7 +15,7 @@ const Header = ({
     modalLoginOpen,
     modalRegOpen,
     modalCartOpen,
-  }) => {
+}) => {
   const unauthLinks = (
     <>
       <li className="nav-item">
@@ -67,6 +67,11 @@ const Header = ({
             <li className="nav-item">
               <NavLink className="nav-link" to="/checkout">Checkout</NavLink>
             </li>
+            {isAuth && (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/user-page">My orders</NavLink>
+              </li>
+            )}
           </ul>
           <ul className="navbar-nav ml-auto align-items-center">
             {!isAuth ? unauthLinks : authLinks}

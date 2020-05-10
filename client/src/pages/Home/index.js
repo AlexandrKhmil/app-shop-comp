@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../../containers/Sidebar';
-import SearchForm from '../../components/SearchForm';
+// import SearchForm from '../../components/SearchForm';
 import ProductCard from '../../components/ProductCard';
 import { productGetList } from '../../actions/product';
 import { categoryFilter, tagFilter, sortProduct } from '../../functions';
@@ -23,9 +23,9 @@ const Home = ({
           </div>
           <div className="col-12 col-lg-9">
             <div className="row">
-              <div className="col-12 mb-3">
+              {/* <div className="col-12 mb-3">
                 <SearchForm className="navbar bg-primary rounded" />
-              </div>
+              </div> */}
 
               {productList && productList.map((item, index) => 
                 <div className="col-6 col-md-4 col-xl-3 mb-3" key={index}>

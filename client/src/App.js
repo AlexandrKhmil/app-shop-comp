@@ -27,6 +27,7 @@ import {
 import Home from './pages/Home';
 import Checkout from './pages/Checkout';
 import Product from './pages/Product';
+import UserPage from './pages/UserPage';
 
 const App = ({ 
     accountToken,
@@ -107,6 +108,7 @@ const App = ({
           <Route exact path="/" component={Home} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/product/:link" component={Product} />
+          <Route path="/user-page/" component={UserPage} />
         </Switch>
       </Router>
     </AlertProvider>

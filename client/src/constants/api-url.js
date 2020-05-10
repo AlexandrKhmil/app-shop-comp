@@ -13,3 +13,6 @@ export const REVIEW_ADD = (link) => `/api/product/${link}/review`;
 
 export const RATE_ADD = (link) => `/api/product/${link}/rate`;
 export const RATE_GET = (link) => `/api/product/${link}/rate/value`;
+
+export const ORDER_ADD = '/api/order/';
+export const ORDER_LIST = '/api/order/list';

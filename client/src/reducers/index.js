@@ -8,6 +8,7 @@ import tag from './tag';
 import product from './product';
 import selected from './selected';
 import review from './review';
+import order from './order';
 
 export default combineReducers({
   message, 
@@ -19,4 +20,5 @@ export default combineReducers({
   product,
   selected,
   review,
+  order,
 });
