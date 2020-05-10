@@ -4,6 +4,8 @@ const initialState = {
   data: {},
   isLoading: false,
   isLoaded: false,
+  isReviewLoading: false,
+  isReviewLoaded: true,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -32,13 +34,31 @@ export default (state = initialState, { type, payload }) => {
         isLoaded: true,
       };
     }
+
+    case actionType.REVIEW_LIST_REQUEST: {
+      return {
+        ...state,
+        isReviewLoading: true,
+        isReviewLoaded: false,
+      };
+    }
     case actionType.REVIEW_LIST_SUCCESS: {
       return {
         ...state,
         data: {
           ...state.data,
-        }
-      }
+          review_list: payload
+        },
+        isReviewLoading: false,
+        isReviewLoaded: true,
+      };
+    }
+    case actionType.REVIEW_LIST_FAIL: {
+      return {
+        ...state,
+        isReviewLoading: false,
+        isReviewLoaded: true,
+      };
     }
     default: {
       return state;

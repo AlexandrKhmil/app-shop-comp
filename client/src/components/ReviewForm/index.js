@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 import { reviewAdd } from '../../actions/review';
 import { modalLoginOpen } from '../../actions/modal';
 
-const ReviewForm = ({ isAuth, token, link, reviewAdd, modalLoginOpen, userReview }) => {
+const ReviewForm = ({ 
+  isAuth, 
+  token, 
+  link, 
+  reviewAdd, 
+  modalLoginOpen, 
+  userReview, 
+  isLoading,
+  isLoaded,
+}) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const buttonText = !false ? 'Send Review' : 'Loading';
+  let buttonText = !isLoading 
+    ? (userReview ? 'Change Review' : 'Send Review') 
+    : 'Loading';
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +54,7 @@ const ReviewForm = ({ isAuth, token, link, reviewAdd, modalLoginOpen, userReview
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          disabled={false} /> 
+          disabled={isLoading} /> 
       </div>
       <div className="form-group">
         <label htmlFor="text">Текст</label>
@@ -53,13 +64,13 @@ const ReviewForm = ({ isAuth, token, link, reviewAdd, modalLoginOpen, userReview
           name="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          disabled={false} /> 
+          disabled={isLoading} /> 
       </div>
       <div className="form-group d-flex justify-content-end mb-0">
         <button 
           className="btn btn-primary d-flex justify-content-between align-items-center"
-          disabled={false}>
-          {false && 
+          disabled={isLoading}>
+          {isLoading && 
             <span 
               className="spinner-border spinner-border-sm mr-2"
               role="status"
@@ -82,6 +93,8 @@ const mapStateToProps = (state) => {
     link: state.selected.data.link,
     token: state.account.token,
     userReview, 
+    isLoading: state.review.isLoading,
+    isLoaded: state.review.isLoaded,
   }; 
 };
 

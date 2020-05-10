@@ -33,7 +33,7 @@ export const reviewAddFail = () => ({
 export const reviewGetList = ({ link }) => (dispatch) => {
   dispatch(reviewListRequest());
   const { config } = jsonRequest({ headers: { link }});
-  axios.get(apiURL.REVIEW_GET, config)
+  axios.get(apiURL.REVIEW_GET(link), config)
     .then((res) => {
       dispatch(reviewListSuccess(res.data));
     })
@@ -52,6 +52,9 @@ export const reviewAdd = ({ token, link, title, text }) => (dispatch) => {
   axios.post(apiURL.REVIEW_ADD(link), body, config)
     .then((res) => {
       dispatch(reviewAddSuccess(res.data));
+    })
+    .then(() => {
+      reviewGetList({ link })(dispatch);
     })
     .catch((err) => {
       dispatch(reviewAddFail());
