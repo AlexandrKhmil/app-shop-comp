@@ -32,7 +32,7 @@ const Product = ({
           <div className="col-lg-5 mb-3">
             <div className="card card-body border-primary ">
               <img className={`mb-3 ${styles.img}`} src={product.img_url} alt="Product" />
-              <Rating />
+              <Rating link={link} />
             </div> 
           </div>
 
@@ -63,10 +63,8 @@ const Product = ({
           </div>
 
           <div className="col-12 mb-3">
-            <div className="card card-body border-primary">
-              <h3>Отзывы:</h3>
-              <ReviewList />
-            </div>
+            <h3>Отзывы:</h3>
+            <ReviewList />
           </div>
         </div>
       </div>
@@ -99,16 +97,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
-
-
-/*
-
-{product.category}
-              {product.price}
-              {product.create_time}
-              {product.rate || 'Нет Голосов'}
-              {product.votes}
-              {product.review_count}
-              {product.tag_list}
-              {product.review_list || ''}
-              */

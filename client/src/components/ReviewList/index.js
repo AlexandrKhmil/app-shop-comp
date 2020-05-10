@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { dateTimeFormat, dateToInteger } from '../../functions';
 
 const ReviewList = ({ list }) => {
-  if (!list) {
+  if (!list || list.length === 0) {
     return <>Отзывы отсутствуют...</>
   }
 

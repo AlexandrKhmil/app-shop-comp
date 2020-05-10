@@ -10,3 +10,6 @@ export const PRODUCT_INFO = (link) => `/api/product/${link}/info`;
 
 export const REVIEW_GET = (link) => `/api/product/${link}/review/list`;
 export const REVIEW_ADD = (link) => `/api/product/${link}/review`;
+
+export const RATE_ADD = (link) => `/api/product/${link}/rate`;
+export const RATE_GET = (link) => `/api/product/${link}/rate/value`;

@@ -60,6 +60,22 @@ export default (state = initialState, { type, payload }) => {
         isReviewLoaded: true,
       };
     }
+
+    case actionType.RATE_GET_REQUEST: {
+      return state;
+    }
+    case actionType.RATE_GET_SUCCESS: {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          rate: payload.rate,
+        },
+      };
+    }
+    case actionType.RATE_GET_FAIL: {
+      return state;
+    }
     default: {
       return state;
     }
