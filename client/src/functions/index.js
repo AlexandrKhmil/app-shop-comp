@@ -65,13 +65,26 @@ export const dateTimeFormat = (date) => {
     result = `${arr2[0]}:${arr2[1]} ${arr[2]}-${arr[1]}-${arr[0]}`;
   }
   return result;
+};
+
+export const dateToInteger = (date) => {
+  let result = 0;
+  if (date) {
+    const day = date.split('T')[0].split('-');
+    const time = date.split('T')[1].split('Z')[0].split(':')
+    result = parseFloat(time[2]) + parseFloat(time[1]) * 60 
+      + parseFloat(time[0]) * 60 * 60 + parseFloat(day[2]) * 60 * 60 * 24
+      + parseFloat(day[1]) * 60 * 60 * 24 * 30 
+      + parseFloat(day[0]) * 60 * 60 * 24 * 30 * 12;
+  }
+  return result;
 }
 
 export const ratingNormalization = (rating) => {
-  let normalizedRating = rating / 5 * 500
+  let normalizedRating = rating / 5 * 500;
   return Array(5).fill(0).map(() => {
-    let rating = normalizedRating >= 100 ? 100 : normalizedRating
-    normalizedRating = normalizedRating >= 100 ? normalizedRating - 100 : 0
+    let rating = normalizedRating >= 100 ? 100 : normalizedRating;
+    normalizedRating = normalizedRating >= 100 ? normalizedRating - 100 : 0;
     return rating
-  })
+  });
 };
