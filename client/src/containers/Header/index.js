@@ -7,6 +7,7 @@ import {
   modalCartOpen 
 } from '../../actions/modal';
 import { logoutUser } from '../../actions/account';
+import styles from './styles.module.css';
 
 const Header = ({ 
     isAuth,
@@ -15,6 +16,7 @@ const Header = ({
     modalLoginOpen,
     modalRegOpen,
     modalCartOpen,
+    cartCount,
 }) => {
   const unauthLinks = (
     <>
@@ -77,9 +79,10 @@ const Header = ({
             {!isAuth ? unauthLinks : authLinks}
             <li className="nav-item">
               <button 
-                className="nav-link btn btn-link"
+                className="nav-link btn btn-info d-flex align-items-center"
                 onClick={modalCartOpen}>
-                Cart
+                <span className="mr-2">{cartCount}</span>
+                <img className={styles.cartImg} src={require('../../static/shopping-cart.svg')} alt="Cart" />
               </button>
             </li>
           </ul>
@@ -92,6 +95,9 @@ const Header = ({
 const mapStateToProps = (state) => ({
   isAuth: state.account.isAuth,
   email: state.account.email,
+  cartCount: Object.values(state.cart.list).reduce((prev, item) => {
+    return prev + item.quantity;
+  }, 0),
 });
 
 const mapDispatchToProps = (dispatch) => ({
