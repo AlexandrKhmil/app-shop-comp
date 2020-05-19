@@ -21,8 +21,9 @@ const CartFooter = ({ totalPrice, modalCartClose }) => (
 
 const mapStateToProps = (state) => {
   const totalPrice = Object.values(state.cart.list).reduce((prev, cartItem) => {
-    const price = Object.values(state.product.list)
-      .find((product) => product.id === cartItem.id).price;
+    const product = Object.values(state.product.list)
+      .find((product) => product.id === cartItem.id)
+    const price = product ? product.price : 0;
     return prev + cartItem.quantity * price;
   }, 0);
   return {

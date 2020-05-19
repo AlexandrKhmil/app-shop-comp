@@ -41,10 +41,12 @@ const Product = ({
             <div className="card card-body border-primary">
               <InfoTable data={tableData}/>
               <button 
-                className={`btn btn-primary d-flex justify-content-center p-1 mt-auto ${styles.btn}`}
+                className={styles.btn}
                 onClick={() => cartAddProduct(product.id)}>
-                Добавить в корзину
-                <img className="ml-2" src={require('../../static/shopping-cart.svg')} alt="Cart" />
+                <span>
+                  Add to Cart 
+                </span>
+                <img className={styles.plus} src={require('../../static/plus.svg')} alt="Cart Plus" />
               </button>
             </div>
           </div>

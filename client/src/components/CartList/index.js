@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { cartClearProducrt } from '../../actions/cart';
+import { modalCartClose } from '../../actions/modal';
 import styles from './styles.module.css';
 
-const CartList = ({ list, cartClearProducrt }) => {
+const CartList = ({ list, cartClearProducrt, modalCartClose }) => {
   if (list.length === 0) {
     return (
       <div className={styles.cartBody}>
@@ -26,14 +27,17 @@ const CartList = ({ list, cartClearProducrt }) => {
           </button>
           <NavLink 
             className="d-flex justify-content-center align-items-center" 
-            to={`/product/${product.link}`}>
+            to={`/product/${product.link}`}
+            onClick={modalCartClose}>
             <img 
               className={styles.img} 
               src={product.img_url} 
               alt="Cart Product" />
           </NavLink> 
           <div className="ml-3 mr-4">
-            <NavLink to={`/product/${product.link}`}>
+            <NavLink 
+              to={`/product/${product.link}`}
+              onClick={modalCartClose}>
               <h5>{product.title}</h5>
             </NavLink>
             <div>
@@ -63,6 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   cartClearProducrt: (value) => dispatch(cartClearProducrt(value)),
+  modalCartClose: () => dispatch(modalCartClose()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartList);

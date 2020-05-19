@@ -33,7 +33,7 @@ const ReviewForm = ({
 
   if (!isAuth) {
     return (
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center flex-wrap">
         <span className="mr-1">Для того чтобы оставить отзыв</span> 
         <button 
           className="btn btn-link p-0" 
