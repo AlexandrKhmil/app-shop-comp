@@ -34,9 +34,9 @@ const ReviewForm = ({
   if (!isAuth) {
     return (
       <div className="d-flex align-items-center">
-        Для того чтобы оставить отзыв 
+        <span className="mr-1">Для того чтобы оставить отзыв</span> 
         <button 
-          className="btn btn-link p-0 ml-1" 
+          className="btn btn-link p-0" 
           onClick={modalLoginOpen}>
             войдите в систему
         </button>.

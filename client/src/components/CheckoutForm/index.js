@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { messageShow } from '../../actions/message';
 import { orderAdd } from '../../actions/order';
+import { modalLoginOpen } from '../../actions/modal';
 import * as msgType from '../../constants/message-type';
 
 const CheckoutForm = ({ 
@@ -11,6 +12,8 @@ const CheckoutForm = ({
   orderAdd,
   token,
   cart,
+  isAuth,
+  modalLoginOpen
 }) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -65,7 +68,7 @@ const CheckoutForm = ({
       <div className="form-group mb-0">
         <button
           className="btn btn-primary d-flex justify-content-between align-items-center"
-          disabled={isLoading || isEmpty} >
+          disabled={isLoading || isEmpty || !isAuth} >
           {isLoading && 
             <span 
               className="spinner-border spinner-border-sm mr-2"
@@ -75,12 +78,24 @@ const CheckoutForm = ({
           }
           {!isLoading ? 'Оформить заказ' : 'Loading'}
         </button>
+
+        {!isAuth && (
+          <div className="d-flex align-items-center flex-wrap mt-3">
+            <span className="mr-1">Для того чтобы сделать заказ</span> 
+            <button 
+              className="btn btn-link p-0" 
+              onClick={modalLoginOpen}>
+                войдите в систему
+            </button>.
+          </div>
+        )}
       </div>
     </form>
   );
 };
 
 const mapStateToProps = (state) => ({
+  isAuth: state.account.isAuth,
   token: state.account.token,
   isLoading: false,
   userEmail: state.account.email,
@@ -94,6 +109,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   orderAdd: (value) => dispatch(orderAdd(value)),
+  modalLoginOpen: (value) => dispatch(modalLoginOpen(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm);
