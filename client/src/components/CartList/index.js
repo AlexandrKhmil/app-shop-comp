@@ -20,20 +20,20 @@ const CartList = ({ list, cartClearProducrt }) => {
           className="card card-body flex-row align-items-start mb-3"
           key={product.id}>
           <button 
-            className={`btn btn-danger d-flex justify-content-center align-items-center p-1 ${styles.remove}`}
+            className={`btn btn-danger d-flex justify-content-center align-items-center p-0 ${styles.remove}`}
             onClick={() => cartClearProducrt(product.id)}>
             &times;
           </button>
           <NavLink 
             className="d-flex justify-content-center align-items-center" 
-            to={product.link}>
+            to={`/product/${product.link}`}>
             <img 
               className={styles.img} 
               src={product.img_url} 
               alt="Cart Product" />
           </NavLink> 
           <div className="ml-3 mr-4">
-            <NavLink to={product.link}>
+            <NavLink to={`/product/${product.link}`}>
               <h5>{product.title}</h5>
             </NavLink>
             <div>
