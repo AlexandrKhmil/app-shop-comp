@@ -63,10 +63,12 @@ const ProductCart = ({
     <div>{price} ₴</div>
 
     <button 
-      className={`btn btn-primary d-flex justify-content-center p-1 mt-auto ${styles.btn}`}
+      className={styles.btn}
       onClick={() => cartAddProduct(id)}>
-      Добавить 
-      <img className="ml-2" src={require('../../static/shopping-cart.svg')} alt="Cart" />
+      <span>
+        Add to Cart 
+      </span>
+      <img className={styles.plus} src={require('../../static/plus.svg')} alt="Cart Plus" />
     </button>
   </div>
 );
