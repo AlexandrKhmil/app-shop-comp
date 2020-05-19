@@ -79,7 +79,7 @@ const Header = ({
             {!isAuth ? unauthLinks : authLinks}
             <li className="nav-item">
               <button 
-                className="nav-link btn btn-info d-flex align-items-center"
+                className="nav-link btn btn-info d-flex align-items-center p-2"
                 onClick={modalCartOpen}>
                 <span className="mr-2">{cartCount}</span>
                 <img className={styles.cartImg} src={require('../../static/shopping-cart.svg')} alt="Cart" />
